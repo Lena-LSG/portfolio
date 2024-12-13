@@ -1,4 +1,3 @@
-<!-- filepath: /E:/OneDrive/Documents/Programming/Portfolio/index.php -->
 <!DOCTYPE html>
 <html lang="en">
 

@@ -1,5 +1,4 @@
 <?php
-// filepath: /E:/OneDrive/Documents/Programming/Portfolio/php/contact.php
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
