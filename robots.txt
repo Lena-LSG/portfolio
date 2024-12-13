@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /php/
+Disallow: /admin/
+Disallow: /private/
+Allow: /
+
+Sitemap: https://yourwebsite.com/sitemap.xml
+
+Crawl-delay: 10
