@@ -1,83 +1,91 @@
+// Document Ready Function
 $(document).ready(function() {
-    // Smooth scrolling with easing effect
-    $('a.nav-link').on('click', function(event) {
-        if (this.hash !== "") {
-            event.preventDefault();
-            var hash = this.hash;
-            $('html, body').animate({
-                scrollTop: $(hash).offset().top
-            }, 1000, 'easeInOutExpo');
-        }
+    // Initialize AOS animations
+    AOS.init({
+        duration: 1000,
+        once: true,
+        disable: 'mobile'
     });
-
-    var nav = $('#nav');
-    var overlay = $('#overlay');
-
-    function toggleSidebar() {
-        nav.toggleClass('open');
-        overlay.toggleClass('open');
-        $('body').toggleClass('sidebar-open');
+    
+    // Check for saved dark mode preference
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        $('body').addClass('dark-mode');
+        $('#darkModeToggle').prop('checked', true);
     }
-
-    $('#hamburger').on('click', toggleSidebar);
-    overlay.on('click', toggleSidebar);
-
-    // Close the menu when a link is clicked
-    $('.nav.sidebar ul li a').on('click', function() {
-        if (nav.hasClass('open')) {
-            toggleSidebar();
+    
+    // Dark Mode Toggle
+    $('.dark-mode-toggle, #darkModeToggle').click(function() {
+        $('body').toggleClass('dark-mode');
+        
+        if ($('body').hasClass('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+        } else {
+            localStorage.setItem('darkMode', null);
         }
     });
-
-
-    // Animate progress bars when they come into view
-    function animateProgressBars() {
-        $('.progress-bar').each(function() {
-            var bar = $(this);
-            var width = bar.css('width');
-            bar.width(0).animate({width: width}, 1000);
+    
+    // Terminal functionality
+    if ($('#terminal-command').length) {
+        const terminalContent = $('#terminal-content');
+        const terminalCommand = $('#terminal-command');
+        
+        // Focus terminal input when terminal is clicked
+        $('.terminal-window').click(function() {
+            terminalCommand.focus();
         });
-    }
-
-    // Trigger animation when skills section enters viewport
-    var skillsSection = $('#skills');
-    $(window).scroll(function() {
-        var top_of_element = skillsSection.offset().top;
-        var bottom_of_element = skillsSection.offset().top + skillsSection.outerHeight();
-        var bottom_of_screen = $(window).scrollTop() + $(window).height();
-        var top_of_screen = $(window).scrollTop();
-
-        if ((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
-            animateProgressBars();
-        }
-    });
-
-    // Contact Form AJAX Submission
-    $('#contactForm').on('submit', function(e) {
-        e.preventDefault();
         
-        var $form = $(this);
-        var $submitBtn = $form.find('button[type="submit"]');
-        var $formMessage = $('#formMessage');
-        
-        $submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Sending...');
-        
-        $.ajax({
-            type: 'POST',
-            url: $form.attr('action'),
-            data: $form.serialize(),
-            success: function(response) {
-                $formMessage.removeClass('alert-danger').addClass('alert alert-success')
-                    .html('Message sent successfully!');
-                $form[0].reset();
-            },
-            error: function(xhr, status, error) {
-                $formMessage.removeClass('alert-success').addClass('alert alert-danger')
-                    .html('Error sending message. Please try again.');
-            },
-            complete: function() {
-                $submitBtn.prop('disabled', false).html('<i class="fas fa-paper-plane"></i> Send Message');
+        // Process terminal commands
+        terminalCommand.keypress(function(e) {
+            if (e.which === 13) { // Enter key
+                const command = $(this).val();
+                
+                // Add command to terminal
+                terminalContent.append(`<div class="terminal-line"><span class="text-success">lena@security</span>:<span class="text-primary">~</span>$ ${command}</div>`);
+                
+                // Process command via AJAX
+                $.ajax({
+                    url: 'php/process_command.php',
+                    method: 'POST',
+                    data: { command: command },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.clear) {
+                            terminalContent.html('');
+                        } else {
+                            // Add command output to terminal
+                            $.each(response.output, function(i, line) {
+                                terminalContent.append(`<div class="terminal-line">${line}</div>`);
+                            });
+                        }
+                        
+                        // Add new prompt
+                        terminalContent.append(`<div class="terminal-line"><span class="text-success">lena@security</span>:<span class="text-primary">~</span>$ <span id="terminal-cursor">_</span></div>`);
+                        
+                        // Scroll to bottom of terminal
+                        terminalContent.scrollTop(terminalContent[0].scrollHeight);
+                    }
+                });
+                
+                // Clear input
+                $(this).val('');
             }
         });
-    });
+        
+        // Blinking cursor effect
+        setInterval(function() {
+            $('#terminal-cursor').toggleClass('invisible');
+        }, 500);
+    }
+    
+    // Security tip rotation
+    setInterval(function() {
+        $.ajax({
+            url: 'php/get_security_tip.php',
+            success: function(tip) {
+                $('#securityTip').fadeOut(500, function() {
+                    $(this).html(tip).fadeIn(500);
+                });
+            }
+        });
+    }, 30000); // Change every 30 seconds
 });

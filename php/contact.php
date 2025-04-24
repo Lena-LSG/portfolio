@@ -82,12 +82,12 @@ try {
     $mail->AltBody = "New Contact Form Submission\n\nName: {$name}\nEmail: {$email}\nMessage:\n{$message}";
 
     $mail->send();
+    echo json_encode(['success' => 'Message sent successfully!']);
     $_SESSION['last_submission'] = time();
-    http_response_code(200);
-    echo json_encode(['success' => 'Message sent successfully']);
 } catch (Exception $e) {
+    // Log error to a file
+    error_log('Mailer Error: ' . $mail->ErrorInfo . "\n", 3, __DIR__ . '/logs/error.log');
     http_response_code(500);
-    error_log("Contact form error: " . $mail->ErrorInfo);
-    echo json_encode(['error' => 'Server error, please try again later']);
+    echo json_encode(['error' => 'There was an error sending your message. Please try again later.']);
 }
 ?>

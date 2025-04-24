@@ -1,32 +1,52 @@
+<?php
+// Initialize configuration and common functions
+require_once './php/config.php';
+require_once './php/functions.php';
+
+// Page-specific variables
+$page_title = "Cyber Security Infrastructure Specialist | Lena Gibson";
+$meta_description = "Lena Gibson's Portfolio - Cyber Security Infrastructure Specialist with Microsoft Incident Response, specializing in threat detection, incident management, and cloud security architecture.";
+$is_home_page = true;
+
+// Load dynamic content
+$skills = get_skills_data();
+$projects = get_projects_data();
+$certifications = get_certifications_data();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>Cybersecurity Engineer Portfolio | Lena Gibson</title>
+    <title><?php echo $page_title; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
+    <!-- Security Headers -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com https://cdnjs.cloudflare.com 'unsafe-inline'; style-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self';">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+    
     <!-- Meta Description -->
-    <meta name="description" content="Lena Gibson's Portfolio - Cybersecurity Engineer specializing in penetration testing, security architecture, and vulnerability management. Explore projects, skills, and connect with Lena for innovative cybersecurity solutions.">
-
+    <meta name="description" content="<?php echo $meta_description; ?>">
 
     <!-- Meta Keywords -->
-    <meta name="keywords" content="Cybersecurity Engineer, Penetration Testing, Security Architecture, Vulnerability Management, SIEM, SOAR, Cloud Security, Azure Security, Terraform, Python, Ethical Hacker">
+    <meta name="keywords" content="Cyber Security Infrastructure Specialist, Microsoft Incident Response, Azure Security, Cloud Security, Threat Detection, Incident Management, Security Architecture, SIEM, SOAR, Azure Sentinel, Defender for Cloud">
 
     <!-- Canonical Link -->
     <link rel="canonical" href="https://www.yourdomain.com/">
 
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Lena Gibson - Cybersecurity Engineer Portfolio">
-    <meta property="og:description" content="Explore the professional portfolio of Lena Gibson, a passionate Cybersecurity Engineer with expertise in penetration testing, security architecture, and more.">
+    <meta property="og:title" content="Lena Gibson - Cyber Security Infrastructure Specialist">
+    <meta property="og:description" content="Explore the professional portfolio of Lena Gibson, a Cyber Security Infrastructure Specialist with Microsoft Incident Response specializing in threat detection, incident management, and cloud security architecture.">
     <meta property="og:image" content="https://www.yourdomain.com/media/images/og-image.jpg">
     <meta property="og:url" content="https://www.yourdomain.com/">
     <meta property="og:type" content="website">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Lena Gibson - Cybersecurity Engineer Portfolio">
-    <meta name="twitter:description" content="Discover the professional portfolio of Lena Gibson, specializing in cybersecurity, penetration testing, and security architecture.">
+    <meta name="twitter:title" content="Lena Gibson - Cyber Security Infrastructure Specialist">
+    <meta name="twitter:description" content="Discover the professional portfolio of Lena Gibson, a Cyber Security Infrastructure Specialist with Microsoft Incident Response.">
     <meta name="twitter:image" content="https://www.yourdomain.com/media/images/twitter-card-image.jpg">
 
     <!-- Schema.org Structured Data -->
@@ -35,15 +55,17 @@
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Lena Gibson",
-      "jobTitle": "Cybersecurity Engineer",
+      "jobTitle": "Cyber Security Infrastructure Specialist",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Microsoft Incident Response"
+      },
       "url": "https://www.yourdomain.com/",
       "sameAs": [
-        "https://www.linkedin.com/in/lenagibson/",
-        "https://twitter.com/yourtwitterhandle",
-        "https://github.com/yourgithubprofile"
+        "https://www.linkedin.com/in/lenagibson/"
       ],
       "image": "https://www.yourdomain.com/media/images/profile.jpg",
-      "description": "Passionate Cybersecurity Engineer with expertise in penetration testing, security architecture, and vulnerability management.",
+      "description": "Cyber Security Infrastructure Specialist with Microsoft Incident Response, focusing on Azure security, threat detection, and cloud infrastructure security architecture.",
       "alumniOf": {
         "@type": "EducationalOrganization",
         "name": "Your University Name"
@@ -51,241 +73,207 @@
     }
     </script>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Updated Bootstrap to latest version -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Fallback for Font Awesome -->
+    <script>
+    // Function to check if Font Awesome loaded properly
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            // Test if Font Awesome is working
+            var testIcon = document.createElement('i');
+            testIcon.className = 'fas fa-user';
+            testIcon.style.visibility = 'hidden';
+            document.body.appendChild(testIcon);
+            
+            var styles = window.getComputedStyle(testIcon);
+            if (styles.width === '0px') {
+                console.warn('Font Awesome failed to load. Loading fallback...');
+                // Try loading from another CDN
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://use.fontawesome.com/releases/v6.5.1/css/all.css';
+                document.head.appendChild(link);
+            }
+            document.body.removeChild(testIcon);
+        }, 500);
+    });
+    </script>
+    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cardo:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="./css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Montserrat:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Dark Mode Toggle -->
+    <link rel="stylesheet" href="./css/dark-mode.css">
+    <style>
+        :root {
+            --trans-blue: #55CDFC;
+            --trans-pink: #F7A8B8;
+            --trans-white: #FFFFFF;
+            --primary-color: #2a2a72;
+            --secondary-color: #5e72e4;
+            --accent-color: #b8c2cc;
+            --dark-bg: #1a1a2e;
+            --light-text: #f8f9fa;
+        }
+
+        .trans-gradient-border {
+            border-left: 4px solid transparent;
+            background-image: linear-gradient(var(--dark-bg), var(--dark-bg)), 
+                              linear-gradient(to bottom, var(--trans-blue), var(--trans-white), var(--trans-pink));
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+        }
+    </style>
 </head>
 
-<body>
+<body class="<?php echo get_body_classes(); ?>">
     <?php include './php/header.php'; ?>
 
-        <!-- About Section -->
-    <section id="about">
-    <h2>About Me</h2>
-        <div class="about-container">
-            <div class="profile-image">
-                <img src="./media/images/profile.jpg" alt="Lena Gibson - Cybersecurity Engineer">
-            </div>
-            <div class="about-content">
-                <p class="lead">Passionate Cybersecurity Engineer with expertise in penetration testing and security architecture.</p>
-                <p>With over 2 years of experience in cybersecurity, I specialize in identifying and mitigating security vulnerabilities across complex systems. My background includes both offensive and defensive security practices, allowing me to approach security challenges from multiple perspectives.</p>
-                <div class="certifications">
-                    <h3>Certifications</h3>
-                    <ul>
-                        <li>Certified Information Systems Security Professional (CISSP)</li>
-                        <li>Certified Ethical Hacker (CEH)</li>
-                        <li>GIAC Security Essentials (GSEC)</li>
-                    </ul>
+    <!-- Security Tip Widget -->
+    <div class="container mt-3">
+        <?php include './php/sections/security_tip.php'; ?>
+    </div>
+
+    <!-- About Section -->
+    <?php include './php/sections/about.php'; ?>
+
+    <!-- Terminal Section -->
+    <?php include './php/sections/terminal.php'; ?>    
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-5 bg-light">
+        <div class="container" data-aos="fade-up">
+            <h2 class="text-center mb-5 fw-bold position-relative">
+                <span class="position-relative">Skills
+                    <span class="position-absolute w-50 h-2 bg-primary" style="bottom: -8px; left: 25%; height: 3px;"></span>
+                </span>
+            </h2>
+            <div class="skills-container">
+                <?php foreach ($skills as $category => $skill_data): ?>
+                <div class="skill-category mb-5" data-aos="fade-up">
+                    <h3 class="d-flex align-items-center mb-4">
+                        <span class="skill-icon-container me-3 rounded-circle bg-primary p-2">
+                            <i class="<?php echo !empty($skill_data['icon']) ? $skill_data['icon'] : 'fas fa-laptop-code'; ?> text-white"></i>
+                        </span>
+                        <?php echo $category; ?>
+                    </h3>
+                    
+                    <div class="row g-4">
+                        <?php foreach ($skill_data['items'] as $skill): ?>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="skill-card p-3 border rounded shadow-sm">
+                                <div class="fa-icon-container mb-3">
+                                    <?php 
+                                    // Simplified icon selection with direct fallback, 
+                                    $cybersecurity_icons = [
+                                        'Azure' => 'fa-brands fa-microsoft',
+                                        'AWS' => 'fa-brands fa-aws',
+                                        'GCP' => 'fa-brands fa-google',
+                                        'Google' => 'fa-brands fa-google',
+                                        'Cloud' => 'fa-solid fa-cloud',
+                                        'Security' => 'fa-solid fa-shield-halved',
+                                        'Compliance' => 'fa-solid fa-check-circle',
+                                        'Python' => 'fa-brands fa-python',
+                                        'Java' => 'fa-brands fa-java',
+                                        'PHP' => 'fa-brands fa-php',
+                                        'Network' => 'fa-solid fa-network-wired',
+                                        'Encryption' => 'fa-solid fa-lock',
+                                        'Firewall' => 'fa-solid fa-fire',
+                                        'Monitoring' => 'fa-solid fa-chart-line',
+                                        'Threat' => 'fa-solid fa-virus',
+                                        'Analysis' => 'fa-solid fa-magnifying-glass-chart',
+                                        'DevOps' => 'fa-solid fa-gears',
+                                        'Docker' => 'fa-brands fa-docker',
+                                        'Linux' => 'fa-brands fa-linux',
+                                        'Windows' => 'fa-brands fa-windows',
+                                        'Kubernetes' => 'fa-solid fa-dharmachakra'
+                                    ]; 
+                                    
+                                    // Default icon
+                                    $icon = 'fa-solid fa-code';
+                                    // Try to find a matching icon
+                                    foreach ($cybersecurity_icons as $key => $value) {
+                                        if (stripos($skill['name'], $key) !== false) {
+                                            $icon = $value;
+                                            break;
+                                        }
+                                    }
+                                    // Use provided icon if available
+                                    if (isset($skill['fa_icon']) && !empty($skill['fa_icon'])) {
+                                        $icon = $skill['fa_icon'];
+                                    }
+                                    ?>
+                                    <i class="<?php echo $icon; ?> skill-icon"></i>
+                                </div>
+                                <h4 class="h6 text-center"><?php echo $skill['name']; ?></h4>
+                                <div class="progress mt-2" style="height: 6px;">
+                                    <div class="progress-bar skill-progress" data-value="<?php echo isset($skill['level']) ? $skill['level'] : 0; ?>" style="width: <?php echo isset($skill['level']) ? $skill['level'] : 0; ?>%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="skills">
-    <h2>Skills</h2>
-    <div class="skills-container">
-        <!-- Cloud Security & Infrastructure -->
-        <div class="skill-category">
-            <h3><i class="fas fa-cloud"></i> Cloud Security & Infrastructure</h3>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <i class="fab fa-microsoft"></i>
-                    <h4>Azure Security</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 85%"></div>
+    <!-- Projects Section -->
+    <section id="projects" class="py-5">
+        <div class="container" data-aos="fade-up">
+            <h2 class="text-center mb-5 fw-bold position-relative">
+                <span class="position-relative">Key Projects
+                    <span class="position-absolute w-50 h-2 bg-primary" style="bottom: -8px; left: 25%; height: 3px;"></span>
+                </span>
+            </h2>
+            <div class="row g-4">
+                <?php foreach ($projects as $index => $project): ?>
+                <div class="col-lg-6 mb-4" data-aos="fade-up" <?php echo ($index > 0) ? 'data-aos-delay="' . $index*100 . '"' : ''; ?>>
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="project-icon me-3 rounded-circle bg-primary p-2">
+                                    <?php 
+                                    // Ensure project icon is valid or use default
+                                    $project_icon = !empty($project['icon']) ? $project['icon'] : 'fa-solid fa-diagram-project';
+                                    ?>
+                                    <i class="<?php echo $project_icon; ?> text-white"></i>
+                                </div>
+                                <h3 class="h5 mb-0"><?php echo $project['title']; ?></h3>
+                            </div>
+                            <p><?php echo $project['description']; ?></p>
+                            <div class="mt-3">
+                                <?php foreach ($project['technologies'] as $tech): ?>
+                                <span class="badge bg-primary me-2 mb-2"><?php echo $tech; ?></span>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="skill-item">
-                    <i class="fas fa-code-branch"></i>
-                    <h4>Infrastructure as Code (Terraform)</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 80%"></div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
-
-        <!-- Security Operations -->
-        <div class="skill-category">
-            <h3><i class="fas fa-shield-alt"></i> Security Operations</h3>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <i class="fas fa-search"></i>
-                    <h4>SIEM Implementation</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-bug"></i>
-                    <h4>Vulnerability Management</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-shield-virus"></i>
-                    <h4>Incident Response</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 75%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Automation & Development -->
-        <div class="skill-category">
-            <h3><i class="fas fa-code"></i> Automation & Development</h3>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <i class="fas fa-terminal"></i>
-                    <h4>KQL Query Development</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-robot"></i>
-                    <h4>SOAR Implementation</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 80%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Security Tools & Platforms -->
-        <div class="skill-category">
-            <h3><i class="fas fa-tools"></i> Security Tools & Platforms</h3>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <i class="fas fa-chart-line"></i>
-                    <h4>Power BI & Azure Workbooks</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <i class="fas fa-network-wired"></i>
-                    <h4>Security Integration (Salesforce, Zscaler, Delinea)</h4>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: 80%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section id="projects">
-    <h2>Professional Achievements</h2>
-    <div class="projects-container">
-        <?php
-            $projects = [
-                [
-                    "title" => "SIEM Platform Enhancement",
-                    "description" => "Led integration of multiple enterprise security tools into centralized SIEM platform. Improved incident response time by 40% through automated alerting.",
-                    "tech" => ["Azure Sentinel", "KQL", "Power BI"],
-                    "icon" => "fas fa-shield-alt"
-                ],
-                [
-                    "title" => "Security Automation Framework",
-                    "description" => "Developed automated security monitoring system using cloud-native tools. Reduced manual intervention in routine security checks by 60%.",
-                    "tech" => ["Terraform", "Azure", "PowerShell"],
-                    "icon" => "fas fa-robot"
-                ],
-                [
-                    "title" => "Vulnerability Management System",
-                    "description" => "Implemented enterprise-wide vulnerability scanning and reporting system. Achieved 95% coverage across network infrastructure.",
-                    "tech" => ["Azure", "Power BI", "Python"],
-                    "icon" => "fas fa-bug"
-                ]
-            ];
-
-            foreach ($projects as $project) {
-                echo '<div class="project-card">';
-                echo '<div class="project-icon"><i class="' . $project['icon'] . '"></i></div>';
-                echo '<h3>' . htmlspecialchars($project['title']) . '</h3>';
-                echo '<p>' . htmlspecialchars($project['description']) . '</p>';
-                echo '<div class="tech-stack">';
-                foreach ($project['tech'] as $tech) {
-                    echo '<span class="tech-badge">' . htmlspecialchars($tech) . '</span>';
-                }
-                echo '</div>';
-                echo '</div>';
-            }
-        ?>
-    </div>
-</section>
-
-<section id="contact">
-    <h2>Contact</h2>
-    <div class="contact-container">
-        <div class="row">
-            <!-- Contact Info -->
-            <div class="col-md-5">
-                <div class="contact-info">
-                    <h3>Let's Connect</h3>
-                    <p class="lead">I'm always interested in discussing cyber security opportunities and innovations.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-envelope"></i>
-                            <a href="mailto:lenalouisegibson@gmail.com">lenalouisegibson@gmail.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fab fa-linkedin"></i>
-                            <a href="https://www.linkedin.com/in/lenagibson/" target="_blank">LinkedIn Profile</a>
-                        </div>
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>London, United Kingdom</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Form -->
-            <div class="col-md-7">
-                <div class="contact-form">
-                    <form id="contactForm" action="php/contact.php" method="POST">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </form>
-                    <div id="formMessage" class="mt-3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+    </section>
+    
+    <!-- Blog Section -->
+    <?php include './php/sections/blog.php'; ?>
+    
+    <!-- Resources Section -->
+    <?php include './php/sections/resources.php'; ?>
+    
+    <!-- Contact Section -->
+    <?php include './php/sections/contact.php'; ?>
+    
+    <!-- Footer -->
     <?php include './php/footer.php'; ?>
 
-    <!-- jQuery and Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <!-- jQuery Easing Plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Custom Scripts -->
-    <script src="./js/scripts.js"></script>
+    <!-- Scripts -->
+    <?php include './php/scripts.php'; ?>
 </body>
 </html>
