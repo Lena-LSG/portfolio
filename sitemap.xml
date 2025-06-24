@@ -3,8 +3,56 @@
     <!-- Homepage -->
     <url>
         <loc>https://www.lenagibsonportfolio.com/</loc>
-        <lastmod>2023-10-15</lastmod>
+        <lastmod>2025-06-24</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
+    </url>
+    
+    <!-- About Section -->
+    <url>
+        <loc>https://www.lenagibsonportfolio.com/#about</loc>
+        <lastmod>2025-06-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Skills Section -->
+    <url>
+        <loc>https://www.lenagibsonportfolio.com/#skills</loc>
+        <lastmod>2025-06-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Projects Section -->
+    <url>
+        <loc>https://www.lenagibsonportfolio.com/#projects</loc>
+        <lastmod>2025-06-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Contact Section -->
+    <url>
+        <loc>https://www.lenagibsonportfolio.com/#contact</loc>
+        <lastmod>2025-06-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- Blog Section -->
+    <url>
+        <loc>https://www.lenagibsonportfolio.com/#blog</loc>
+        <lastmod>2025-06-24</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Resources Section -->
+    <url>
+        <loc>https://www.lenagibsonportfolio.com/#resources</loc>
+        <lastmod>2025-06-24</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
     </url>
 </urlset>

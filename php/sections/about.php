@@ -4,11 +4,7 @@ $certifications = isset($certifications) ? $certifications : get_certifications_
 ?>
 <section id="about" class="py-5">
     <div class="container" data-aos="fade-up">
-        <h2 class="text-center mb-5 fw-bold position-relative">
-            <span class="position-relative">About Me
-                <span class="position-absolute w-50 h-2 bg-primary" style="bottom: -8px; left: 25%; height: 3px;"></span>
-            </span>
-        </h2>
+        <h2 class="text-center mb-5 fw-bold position-relative">About Me</h2>
         <div class="row about-container g-4 align-items-center">
             <div class="col-lg-4 profile-image text-center" data-aos="fade-right" data-aos-delay="200">
                 <div class="position-relative d-inline-block">
@@ -18,7 +14,7 @@ $certifications = isset($certifications) ? $certifications : get_certifications_
                     </div>
                 </div>
             </div>
-            <div class="col-lg-8 about-content trans-gradient-border ps-4 py-3" data-aos="fade-left" data-aos-delay="300">
+            <div class="col-lg-8 about-content ps-4 py-3" data-aos="fade-left" data-aos-delay="300">
                 <h3 class="mb-3 text-primary">Lena Gibson</h3>
                 <p class="lead fw-bold mb-4">Cyber Security Infrastructure Specialist with Microsoft Incident Response</p>
                 <p class="mb-4">As a Cyber Security Infrastructure Specialist at Microsoft Incident Response, I work with advanced security tools to analyze and respond to security incidents across Microsoft's global platforms. Prior to joining Microsoft, I spent 2.5 years as a security engineer at a regulatory organization where I focused on implementing and scaling Microsoft security solutions including Sentinel, Defender, Entra ID, and Azure Security. My expertise includes SIEM implementation, cloud security architecture, DevOps security integration, and developing automated security response frameworks.</p>

@@ -1,102 +1,189 @@
-/* Dark Mode Styles - TRUE BLACK */
+/* Modern Dark Mode Styles */
 
-/* Global dark mode colors */
+/* Enhanced dark mode color scheme */
+:root {
+  --dark-primary: #0078d7;
+  --dark-secondary: #50e6ff;
+  --dark-bg-primary: #0d1117;
+  --dark-bg-secondary: #161b22;
+  --dark-surface: #21262d;
+  --dark-surface-hover: #30363d;
+  --dark-border: #30363d;
+  --dark-text-primary: #f0f6fc;
+  --dark-text-secondary: #8b949e;
+  --dark-text-accent: #58a6ff;
+}
+
+/* Global dark mode styles */
 body.dark-mode {
-  background-color: #121212;
-  color: #f0f0f0;
+  background-color: var(--dark-bg-primary) !important;
+  color: var(--dark-text-primary) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Remove the problematic inheritance that causes white sections */
-/* .dark-mode *:not(i) {
-  background-color: inherit;
-} */
+/* Override Bootstrap bg-light class in dark mode */
+.dark-mode .bg-light,
+.dark-mode section.bg-light {
+  background-color: var(--dark-bg-secondary) !important;
+  color: var(--dark-text-primary) !important;
+}
 
-/* Apply dark background to specific elements */
-.dark-mode section,
-.dark-mode div,
-.dark-mode span,
-.dark-mode p,
+/* Ensure all containers are dark */
 .dark-mode .container,
+.dark-mode .container-fluid,
 .dark-mode .row,
-.dark-mode .col,
-.dark-mode .col-md-6,
-.dark-mode .col-lg-4 {
-  background-color: #121212;
-  color: #f0f0f0;
+.dark-mode [class^="col-"],
+.dark-mode [class*="col-"] {
+  background-color: transparent !important;
+  color: var(--dark-text-primary) !important;
 }
 
-/* Header */
+/* Enhanced header with glassmorphism effect */
 .dark-mode header {
-  background-color: #1a1a1a !important;
-  border-bottom: 1px solid #333;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background-color: rgba(13, 17, 23, 0.95) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--dark-border);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode header.scrolled {
+  background-color: rgba(13, 17, 23, 0.98) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
 }
 
 .dark-mode header h1 {
-  color: #50e6ff;
+  background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .dark-mode header p {
-  color: #bdbdbd;
+  color: var(--dark-text-secondary);
 }
 
-.dark-mode header .nav a {
-  color: #f0f0f0;
+.dark-mode header .nav-link {
+  color: var(--dark-text-primary);
+}
+
+.dark-mode header .nav-link:hover,
+.dark-mode header .nav-link:focus {
+  background-color: rgba(0, 120, 215, 0.2);
+  color: var(--dark-secondary);
+}
+
+.dark-mode header .navbar-toggler {
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
+}
+
+.dark-mode header .navbar-toggler:hover {
+  border-color: var(--dark-primary);
+  background-color: rgba(0, 120, 215, 0.1);
 }
 
 .dark-mode #mobileNav {
-  background-color: #1a1a1a !important;
-  border-top: 1px solid #333;
+  background-color: rgba(13, 17, 23, 0.98) !important;
+  border-top: 1px solid var(--dark-border);
 }
 
-/* About box specific adjustments */
-.dark-mode #about {
-  background-color: #1a1a1a !important;
-  border: none;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  padding: 30px;
-  margin-bottom: 30px;
+.dark-mode #darkModeToggle {
+  background-color: var(--dark-surface) !important;
+  border-color: var(--dark-border);
+  color: var(--dark-text-primary);
 }
 
-/* Improve trans border styling */
-.dark-mode #about.trans-border {
-  background-color: #1a1a1a !important;
-  border: 3px solid;
-  border-image: linear-gradient(to right, #5BCEFA, #F5A9B8, #FFFFFF, #F5A9B8, #5BCEFA) 1;
-  padding: 25px;
-  margin: 15px 0;
+.dark-mode #darkModeToggle:hover {
+  border-color: var(--dark-primary);
+  background-color: rgba(0, 120, 215, 0.1) !important;
 }
 
-/* Ensure all text in about section is visible */
-.dark-mode #about p,
-.dark-mode #about li,
-.dark-mode #about span,
-.dark-mode #about a,
-.dark-mode #about div {
-  color: #f0f0f0 !important;
+/* Enhanced section styling */
+.dark-mode section {
+  background-color: var(--dark-bg-primary) !important;
 }
 
-/* Certification cards styling fix */
+.dark-mode section:nth-child(even) {
+  background: linear-gradient(135deg, var(--dark-bg-secondary), var(--dark-surface)) !important;
+}
+
+.dark-mode section h2 {
+  color: var(--dark-text-primary) !important;
+}
+
+/* Underline bars for section headings */
+.dark-mode section h2::after {
+  background: var(--dark-secondary) !important;
+}
+
+/* Section subheadings color */
+.dark-mode section h3,
+.dark-mode section h4,
+.dark-mode section h5 {
+  color: var(--dark-text-primary) !important;
+}
+
+/* Note: section h2::after bar styling handled in main styles.css to avoid duplicates */
+
+.dark-mode section h3 {
+  color: var(--dark-text-primary);
+}
+
+/* Enhanced card system for dark mode */
 .dark-mode .card,
 .dark-mode .skill-card,
 .dark-mode .project-card,
 .dark-mode .certification-card {
-  background-color: #232323 !important;
-  border: 1px solid #444;
-  border-radius: 8px;
-  color: #f0f0f0;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  padding: 20px;
-  margin-bottom: 20px;
-  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: var(--dark-surface) !important;
+  border: 1px solid var(--dark-border);
+  color: var(--dark-text-primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .dark-mode .card:hover,
 .dark-mode .skill-card:hover,
 .dark-mode .project-card:hover,
 .dark-mode .certification-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  border-color: rgba(0, 120, 215, 0.5);
+  box-shadow: 0 15px 40px rgba(0, 120, 215, 0.2);
+  background-color: var(--dark-surface-hover) !important;
+}
+
+.dark-mode .card-title,
+.dark-mode .skill-card h4 {
+  color: var(--dark-text-primary);
+}
+
+.dark-mode .card-body {
+  color: var(--dark-text-primary);
+}
+
+/* About section enhancements */
+.dark-mode .about-content {
+  background-color: var(--dark-surface);
+  border: 1px solid var(--dark-border);
+  border-radius: var(--border-radius-lg);
+  color: var(--dark-text-primary);
+}
+
+.dark-mode .about-content .lead {
+  color: var(--dark-secondary) !important;
+}
+
+.dark-mode .about-content p,
+.dark-mode .about-content li,
+.dark-mode .about-content span,
+.dark-mode .about-content div {
+  color: var(--dark-text-primary) !important;
+}
+
+.dark-mode .about-content a {
+  color: var(--dark-text-accent) !important;
+}
+
+.dark-mode .about-content a:hover {
+  color: var(--dark-secondary) !important;
 }
 
 /* Fix section and container backgrounds */
@@ -114,22 +201,12 @@ body.dark-mode {
 
 /* Improve section headers */
 .dark-mode section h2 {
-  color: #50e6ff !important;
   margin-bottom: 30px;
   position: relative;
   padding-bottom: 15px;
 }
 
-.dark-mode section h2::after {
-  background-color: #50e6ff;
-  height: 3px;
-  width: 80px;
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
+/* Note: section h2::after styling handled in main styles.css to avoid duplicate bars */
 
 /* Fix any other containers that might be white */
 .dark-mode .container,
@@ -144,4 +221,217 @@ body.dark-mode {
   background-color: #1a1a1a !important;
   border-color: #333;
   color: #f0f0f0;
+}
+
+/* Progress bars for dark mode */
+.dark-mode .progress {
+  background-color: rgba(0, 120, 215, 0.2) !important;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .progress-bar {
+  background: linear-gradient(90deg, var(--dark-primary), var(--dark-secondary)) !important;
+}
+
+/* Skill cards improvements for dark mode */
+.dark-mode .skill-card {
+  background-color: var(--dark-surface) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.dark-mode .skill-card:hover {
+  background-color: var(--dark-surface-hover) !important;
+  box-shadow: 0 15px 40px rgba(0, 120, 215, 0.2) !important;
+  border-color: rgba(0, 120, 215, 0.4) !important;
+}
+
+.dark-mode .skill-card h4 {
+  color: var(--dark-text-primary) !important;
+}
+
+/* FA icon containers for dark mode */
+.dark-mode .fa-icon-container {
+  background: linear-gradient(135deg, var(--dark-primary), var(--dark-secondary)) !important;
+  color: white !important;
+}
+
+/* Security tip improvements */
+.dark-mode .security-tip {
+  background-color: var(--dark-surface) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.dark-mode .security-tip i {
+  color: var(--dark-secondary) !important;
+}
+
+/* Enhanced section backgrounds */
+.dark-mode section {
+  background-color: transparent !important;
+}
+
+.dark-mode section.bg-light {
+  background-color: var(--dark-bg-secondary) !important;
+}
+
+/* Contact section improvements */
+.dark-mode .contact-info {
+  background-color: var(--dark-surface) !important;
+  border-color: var(--dark-border) !important;
+}
+
+.dark-mode .contact-form {
+  background-color: var(--dark-surface) !important;
+  border-color: var(--dark-border) !important;
+}
+
+.dark-mode .form-control {
+  background-color: var(--dark-surface-hover) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.dark-mode .form-control:focus {
+  background-color: var(--dark-surface-hover) !important;
+  border-color: var(--dark-primary) !important;
+  color: var(--dark-text-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(0, 120, 215, 0.25) !important;
+}
+
+/* Button improvements for dark mode */
+.dark-mode .btn-outline-secondary {
+  border-color: var(--dark-border) !important;
+  color: var(--dark-text-secondary) !important;
+}
+
+.dark-mode .btn-outline-secondary:hover {
+  background-color: var(--dark-surface-hover) !important;
+  border-color: var(--dark-primary) !important;
+  color: var(--dark-primary) !important;
+}
+
+/* Dark mode card and progress overrides */
+.dark-mode .skill-card,
+.dark-mode .project-card {
+  background-color: var(--dark-surface) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+.dark-mode .skill-card .skill-icon,
+.dark-mode .project-card .project-icon {
+  color: var(--dark-secondary) !important;
+}
+
+.dark-mode .skill-card h5,
+.dark-mode .project-card h5 {
+  color: var(--dark-text-primary) !important;
+}
+
+.dark-mode .badge.bg-primary {
+  background-color: var(--dark-primary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+.dark-mode .progress {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark-mode .progress-bar {
+  background: linear-gradient(90deg, var(--dark-primary), var(--dark-secondary)) !important;
+}
+
+/* Bubble icon contrast */
+.dark-mode .bubble-icon {
+  background-color: var(--dark-bg-secondary) !important;
+  border: 1px solid var(--dark-border) !important;
+}
+
+/* Text elements in dark mode */
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode p,
+.dark-mode span,
+.dark-mode .nav-link,
+.dark-mode .btn,
+.dark-mode .card-body {
+  color: var(--dark-text-primary) !important;
+}
+
+/* Override Bootstrap table and list text */
+.dark-mode table,
+.dark-mode th,
+.dark-mode td,
+.dark-mode ul,
+.dark-mode ol {
+  color: var(--dark-text-primary) !important;
+}
+
+/* Ensure inline SVGs and icons are visible */
+.dark-mode img,
+.dark-mode svg {
+  filter: brightness(0.8) !important;
+}
+
+/* High contrast links */
+.dark-mode a {
+  color: var(--dark-text-accent) !important;
+  text-decoration: underline;
+}
+.dark-mode a:hover {
+  color: var(--dark-secondary) !important;
+}
+
+/* Fix all remaining white backgrounds and improve professional padding/spacing for dark mode */
+
+/* Ensure all .bg-light, .container, .row, and .col-* are dark */
+.dark-mode .bg-light,
+.dark-mode .container,
+.dark-mode .container-fluid,
+.dark-mode .row,
+.dark-mode [class^="col-"] {
+  background-color: var(--dark-bg-secondary) !important;
+  color: var(--dark-text-primary) !important;
+}
+
+/* Add consistent spacing and padding */
+.dark-mode section {
+  padding: 3rem 2rem !important;
+  margin-bottom: 2.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
+}
+
+.dark-mode .card,
+.dark-mode .skill-card,
+.dark-mode .project-card {
+  padding: 2rem 1.5rem !important;
+  margin-bottom: 1.5rem;
+  border-radius: 1.25rem !important;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Improve text readability */
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4 {
+  margin-bottom: 1.5rem !important;
+  letter-spacing: 0.01em;
+}
+
+.dark-mode p,
+.dark-mode li,
+.dark-mode .card-body {
+  line-height: 1.7;
+  font-size: 1.08rem;
+  color: var(--dark-text-primary) !important;
+}
+
+/* Remove white border on images */
+.dark-mode img,
+.dark-mode .profile-img {
+  background: none !important;
+  border: none !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25) !important;
 }

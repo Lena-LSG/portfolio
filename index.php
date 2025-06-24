@@ -101,15 +101,19 @@ $certifications = get_certifications_data();
             }
             document.body.removeChild(testIcon);
         }, 500);
-    });
-    </script>
+    });    </script>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&family=Montserrat:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
+    <!-- AOS Animation CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Main Styles -->
+    <link rel="stylesheet" href="./css/styles.css?v=<?php echo time(); ?>">
+    
     <!-- Dark Mode Toggle -->
-    <link rel="stylesheet" href="./css/dark-mode.css">
-    <style>
+    <link rel="stylesheet" href="./css/dark-mode.css?v=<?php echo time(); ?>">    <style>
         :root {
             --trans-blue: #55CDFC;
             --trans-pink: #F7A8B8;
@@ -117,8 +121,9 @@ $certifications = get_certifications_data();
             --primary-color: #2a2a72;
             --secondary-color: #5e72e4;
             --accent-color: #b8c2cc;
-            --dark-bg: #1a1a2e;
-            --light-text: #f8f9fa;
+            --dark-bg: #0d1117;
+            --dark-bg-secondary: #161b22;
+            --light-text: #f0f6fc;
         }
 
         .trans-gradient-border {
@@ -127,6 +132,66 @@ $certifications = get_certifications_data();
                               linear-gradient(to bottom, var(--trans-blue), var(--trans-white), var(--trans-pink));
             background-origin: border-box;
             background-clip: content-box, border-box;
+        }
+
+        /* COMPLETE DARK MODE FIX - Override all white areas */
+        body.dark-mode {
+            background-color: var(--dark-bg) !important;
+            color: var(--light-text) !important;
+        }
+
+        .dark-mode section,
+        .dark-mode section.bg-light,
+        .dark-mode .bg-light,
+        .dark-mode .container,
+        .dark-mode .container-fluid,
+        .dark-mode .row,
+        .dark-mode [class*="col-"] {
+            background-color: var(--dark-bg-secondary) !important;
+            color: var(--light-text) !important;
+        }
+
+        .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5, .dark-mode h6 {
+            color: var(--light-text) !important;
+        }
+
+        .dark-mode .skill-card, 
+        .dark-mode .project-card {
+            background-color: #21262d !important;
+            border: 1px solid #30363d !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+            border-radius: 12px !important;
+            padding: 2rem 1.5rem !important;
+        }
+
+        .dark-mode .progress {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .dark-mode .progress-bar {
+            background-color: var(--trans-blue) !important;
+        }
+
+        .dark-mode .badge.bg-primary {
+            background-color: var(--trans-pink) !important;
+            color: var(--dark-bg) !important;
+        }
+
+        .dark-mode .text-muted {
+            color: #8b949e !important;
+        }
+
+        /* Professional spacing and layout */
+        .dark-mode section {
+            margin-bottom: 3rem !important;
+            padding: 3rem 0 !important;
+            border-radius: 0 !important;
+        }
+
+        .dark-mode .container {
+            padding: 2rem !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25) !important;
         }
     </style>
 </head>
@@ -147,112 +212,51 @@ $certifications = get_certifications_data();
 
     <!-- Skills Section -->
     <section id="skills" class="py-5 bg-light">
-        <div class="container" data-aos="fade-up">
-            <h2 class="text-center mb-5 fw-bold position-relative">
-                <span class="position-relative">Skills
-                    <span class="position-absolute w-50 h-2 bg-primary" style="bottom: -8px; left: 25%; height: 3px;"></span>
-                </span>
-            </h2>
-            <div class="skills-container">
-                <?php foreach ($skills as $category => $skill_data): ?>
-                <div class="skill-category mb-5" data-aos="fade-up">
-                    <h3 class="d-flex align-items-center mb-4">
-                        <span class="skill-icon-container me-3 rounded-circle bg-primary p-2">
-                            <i class="<?php echo !empty($skill_data['icon']) ? $skill_data['icon'] : 'fas fa-laptop-code'; ?> text-white"></i>
-                        </span>
-                        <?php echo $category; ?>
-                    </h3>
-                    
-                    <div class="row g-4">
-                        <?php foreach ($skill_data['items'] as $skill): ?>
-                        <div class="col-md-3 col-sm-6">
-                            <div class="skill-card p-3 border rounded shadow-sm">
-                                <div class="fa-icon-container mb-3">
-                                    <?php 
-                                    // Simplified icon selection with direct fallback, 
-                                    $cybersecurity_icons = [
-                                        'Azure' => 'fa-brands fa-microsoft',
-                                        'AWS' => 'fa-brands fa-aws',
-                                        'GCP' => 'fa-brands fa-google',
-                                        'Google' => 'fa-brands fa-google',
-                                        'Cloud' => 'fa-solid fa-cloud',
-                                        'Security' => 'fa-solid fa-shield-halved',
-                                        'Compliance' => 'fa-solid fa-check-circle',
-                                        'Python' => 'fa-brands fa-python',
-                                        'Java' => 'fa-brands fa-java',
-                                        'PHP' => 'fa-brands fa-php',
-                                        'Network' => 'fa-solid fa-network-wired',
-                                        'Encryption' => 'fa-solid fa-lock',
-                                        'Firewall' => 'fa-solid fa-fire',
-                                        'Monitoring' => 'fa-solid fa-chart-line',
-                                        'Threat' => 'fa-solid fa-virus',
-                                        'Analysis' => 'fa-solid fa-magnifying-glass-chart',
-                                        'DevOps' => 'fa-solid fa-gears',
-                                        'Docker' => 'fa-brands fa-docker',
-                                        'Linux' => 'fa-brands fa-linux',
-                                        'Windows' => 'fa-brands fa-windows',
-                                        'Kubernetes' => 'fa-solid fa-dharmachakra'
-                                    ]; 
-                                    
-                                    // Default icon
-                                    $icon = 'fa-solid fa-code';
-                                    // Try to find a matching icon
-                                    foreach ($cybersecurity_icons as $key => $value) {
-                                        if (stripos($skill['name'], $key) !== false) {
-                                            $icon = $value;
-                                            break;
-                                        }
-                                    }
-                                    // Use provided icon if available
-                                    if (isset($skill['fa_icon']) && !empty($skill['fa_icon'])) {
-                                        $icon = $skill['fa_icon'];
-                                    }
-                                    ?>
-                                    <i class="<?php echo $icon; ?> skill-icon"></i>
-                                </div>
-                                <h4 class="h6 text-center"><?php echo $skill['name']; ?></h4>
-                                <div class="progress mt-2" style="height: 6px;">
-                                    <div class="progress-bar skill-progress" data-value="<?php echo isset($skill['level']) ? $skill['level'] : 0; ?>" style="width: <?php echo isset($skill['level']) ? $skill['level'] : 0; ?>%"></div>
-                                </div>
+        <div class="container my-5">
+            <h2 class="text-center mb-5 fw-bold">Skills</h2>
+            <?php foreach ($skills as $category => $skill_data): ?>
+            <div class="mb-5">
+                <h4 class="mb-4"><?php echo $category; ?> <small class="text-muted">(<?php echo count($skill_data['items']); ?> skills)</small></h4>
+                <div class="row g-4">
+                    <?php foreach ($skill_data['items'] as $skill): ?>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="skill-card text-center">
+                            <div class="mb-3">
+                                <i class="<?php echo $skill['fa_icon']; ?> skill-icon"></i>
+                            </div>
+                            <h5 class="mb-3"><?php echo $skill['name']; ?></h5>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Proficiency</span>
+                                <span class="badge bg-primary"><?php echo $skill['level']; ?>%</span>
+                            </div>                            <div class="progress">
+                                <div class="progress-bar" style="width: <?php echo $skill['level']; ?>%"></div>
                             </div>
                         </div>
-                        <?php endforeach; ?>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <?php endforeach; ?>
             </div>
+            <?php endforeach; ?>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-5">
-        <div class="container" data-aos="fade-up">
-            <h2 class="text-center mb-5 fw-bold position-relative">
-                <span class="position-relative">Key Projects
-                    <span class="position-absolute w-50 h-2 bg-primary" style="bottom: -8px; left: 25%; height: 3px;"></span>
-                </span>
-            </h2>
+    <!-- Key Projects Section -->
+    <section id="projects" class="py-5 bg-light">
+        <div class="container my-5">
+            <h2 class="text-center mb-5 fw-bold">Key Projects</h2>
             <div class="row g-4">
-                <?php foreach ($projects as $index => $project): ?>
-                <div class="col-lg-6 mb-4" data-aos="fade-up" <?php echo ($index > 0) ? 'data-aos-delay="' . $index*100 . '"' : ''; ?>>
-                    <div class="card h-100 border-0 shadow-sm">
-                        <div class="card-body p-4">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="project-icon me-3 rounded-circle bg-primary p-2">
-                                    <?php 
-                                    // Ensure project icon is valid or use default
-                                    $project_icon = !empty($project['icon']) ? $project['icon'] : 'fa-solid fa-diagram-project';
-                                    ?>
-                                    <i class="<?php echo $project_icon; ?> text-white"></i>
-                                </div>
-                                <h3 class="h5 mb-0"><?php echo $project['title']; ?></h3>
-                            </div>
-                            <p><?php echo $project['description']; ?></p>
-                            <div class="mt-3">
-                                <?php foreach ($project['technologies'] as $tech): ?>
-                                <span class="badge bg-primary me-2 mb-2"><?php echo $tech; ?></span>
-                                <?php endforeach; ?>
-                            </div>
+                <?php foreach ($projects as $project): ?>
+                <div class="col-md-6">
+                    <div class="project-card text-center">
+                        <div class="mb-3">
+                            <i class="<?php echo $project['icon']; ?> project-icon"></i>
+                        </div>
+                        <h5 class="mb-3"><?php echo $project['title']; ?></h5>
+                        <p class="mb-3"><?php echo $project['description']; ?></p>
+                        <div>
+                            <?php foreach ($project['technologies'] as $tech): ?>
+                            <span class="badge bg-primary me-1 mb-1"><?php echo $tech; ?></span>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>

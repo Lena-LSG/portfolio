@@ -7,41 +7,57 @@
 <!-- AOS Animation Library -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
+<!-- Custom Scripts -->
+<script src="./js/scripts.js?v=<?php echo time(); ?>"></script>
+
+<!-- CLEAN SCRIPTS - Dark mode handled in scripts.js -->
 <script>
+    console.log('=== PORTFOLIO SCRIPTS LOADING ===');
+    
     // Initialize AOS
     AOS.init({
         duration: 800,
         once: true
     });
     
-    // Dark mode toggle
+    // Wait for DOM to be ready
     $(document).ready(function() {
-        // Check for saved preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            $('body').addClass('dark-mode');
-            $('#darkModeToggle i').removeClass('fa-moon').addClass('fa-sun');
-        }
+        console.log('jQuery ready - scripts.php');
         
-        // Toggle dark mode
-        $('#darkModeToggle').click(function() {
-            $('body').toggleClass('dark-mode');
-            if ($('body').hasClass('dark-mode')) {
-                localStorage.setItem('darkMode', 'enabled');
-                $('#darkModeToggle i').removeClass('fa-moon').addClass('fa-sun');
-            } else {
-                localStorage.setItem('darkMode', null);
-                $('#darkModeToggle i').removeClass('fa-sun').addClass('fa-moon');
+        // Bootstrap navbar toggle support
+        $('[data-bs-toggle="collapse"]').on('click', function() {
+            const target = $(this).data('bs-target');
+            $(target).toggleClass('show');
+            console.log('Mobile menu toggled');
+        });
+        
+        // Close mobile menu when clicking nav links
+        $('#mobileNav .nav-link').on('click', function() {
+            $('#mobileNav').removeClass('show');
+        });
+          // Smooth scrolling for nav links
+        $('a[href^="#"]').on('click', function(e) {
+            e.preventDefault();
+            const target = $(this.getAttribute('href'));
+            if (target.length) {
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top - 80
+                }, 1000);
             }
         });
         
-        // Fix for mobile menu
-        $('.navbar-toggler').click(function() {
-            $('#mobileNav').toggleClass('show');
+        // Animate progress bars
+        $('.progress-bar').each(function(index) {
+            const $this = $(this);
+            const percent = $this.data('value');
+            if (percent) {
+                setTimeout(() => {
+                    $this.css('width', percent + '%');
+                    console.log('Animating progress bar to:', percent + '%');
+                }, 500 + (index * 100));
+            }
         });
         
-        // Close mobile menu when clicking a nav item
-        $('#mobileNav .nav-link').click(function() {
-            $('#mobileNav').removeClass('show');
-        });
+        console.log('Scripts initialized');
     });
 </script>
