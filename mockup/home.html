@@ -1,0 +1,415 @@
+<title>lenagibson.eu mock-up</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+/* Layout: Kanjiskole's navy hero band (rotated swoosh + giant mincho glyph) opens the page;
+   below it soft cards on paper. Day = cream paper, evening = deep navy. Mode follows the clock. */
+:root {
+  /* Kanjiskole tokens, unchanged */
+  --navy: #0A0B5C; --swoosh: #2B1FD6; --swoosh-glyph: #3A30E0;
+  --electric: #4A5CFF; --highlight: #7C95FF; --on-navy: #E4E6EE; --on-navy-muted: #B9BCC8;
+  /* day (default) */
+  --paper: #F5EFE3; --card: #FFFCF6; --ink: #14153A; --muted: #5B5E73; --line: #E2D8C7;
+  --blue: #3B30F0; --warm: #A9561F; --warm-soft: #F3DFC8; --grain-opacity: .07;
+  --f-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --f-ui: "Zen Kaku Gothic New", "Hiragino Sans", "Segoe UI", system-ui, sans-serif;
+  --f-ja: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --r-card: 16px; --r-pill: 999px;
+  color-scheme: light;
+}
+:root[data-mode="evening"] {
+  --paper: #06072B; --card: #10123D; --ink: #FFFFFF; --muted: #B9BCC8; --line: #252862;
+  --blue: #7C95FF; --warm: #F2A65A; --warm-soft: rgba(242,166,90,.14); --grain-opacity: .05;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper); color: var(--ink); font-family: var(--f-ui); font-size: 16px; line-height: 1.6;
+  transition: background-color 1.2s ease, color 1.2s ease; overflow-x: hidden;
+}
+body::after { /* paper grain */
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 50; opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--highlight); outline-offset: 3px; border-radius: 6px; }
+.ja { font-family: var(--f-ja); }
+
+/* mock-up control strip: not part of the site */
+.mock { background: repeating-linear-gradient(135deg, var(--warm-soft) 0 10px, transparent 10px 20px); border-bottom: 1px dashed var(--warm); font-size: 13px; }
+.mock .wrap { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding-block: 10px; }
+.mock b { color: var(--warm); letter-spacing: .06em; text-transform: uppercase; font-size: 11px; }
+.seg { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.seg button { font: inherit; font-size: 13px; border: 1px solid var(--line); background: var(--card); color: var(--ink); padding: 4px 12px; border-radius: var(--r-pill); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.seg .glyph-btn { font-family: var(--f-ja); font-size: 16px; padding: 2px 11px; }
+
+/* hero band */
+.band { position: relative; background: var(--navy); color: var(--on-navy); overflow: hidden; isolation: isolate; }
+.band::before { /* the Kanjiskole swoosh: rotated rounded square */
+  content: ""; position: absolute; left: 38%; top: 210px; width: 820px; height: 820px; border-radius: 140px;
+  background: var(--swoosh); transform: rotate(28deg); z-index: -2; transition: transform 2.4s cubic-bezier(.2,.7,.2,1);
+}
+.band.settle::before { transform: rotate(26deg) translateY(-6px); }
+.hero-glyph {
+  position: absolute; right: -2vw; top: 40px; z-index: -1; font-family: var(--f-ja); font-weight: 700;
+  font-size: clamp(260px, 42vw, 480px); line-height: 1; color: var(--swoosh-glyph); user-select: none;
+  transition: opacity .6s ease; cursor: default;
+}
+.band .wrap { padding-block: 18px 72px; position: relative; }
+nav.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.mark { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; letter-spacing: .01em; }
+.mark span.circ { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(228,230,238,.25); display: grid; place-items: center; font-family: var(--f-ja); font-size: 19px; }
+.links { display: flex; gap: 4px; align-items: center; }
+.links a { text-decoration: none; padding: 6px 12px; border-radius: var(--r-pill); color: var(--on-navy-muted); font-size: 15px; }
+.links a:hover { color: #fff; background: rgba(255,255,255,.08); }
+.lang { font: inherit; font-size: 13px; font-weight: 700; color: var(--on-navy); background: transparent; border: 1px solid rgba(228,230,238,.3); border-radius: var(--r-pill); padding: 5px 12px; cursor: pointer; }
+@media (max-width: 720px) { .links a { display: none; } }
+
+.hero { margin-top: clamp(64px, 12vw, 128px); max-width: 640px; display: grid; gap: 14px; }
+.greet { font-size: 17px; color: var(--on-navy); }
+.hero h1 { font-family: var(--f-display); font-weight: 600; font-size: clamp(38px, 6.4vw, 66px); line-height: 1.04; letter-spacing: -.015em; margin: 0; color: #fff; text-wrap: balance; font-variation-settings: "SOFT" 50, "WONK" 0; }
+.hero h1 em { font-style: italic; color: var(--highlight); }
+.meta { color: var(--on-navy-muted); font-size: 15px; }
+.meta .dot { opacity: .6; padding-inline: 4px; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 10px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 700; font-size: 17px; padding: 15px 28px; border-radius: var(--r-pill); transition: transform .3s ease; }
+.pill:hover { transform: translateY(-2px); }
+.pill.primary { background: #fff; color: var(--swoosh); }
+.pill.ghost { border: 1px solid rgba(228,230,238,.35); color: #fff; }
+.glyph-cap { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); bottom: 22px; font-size: 13px; color: var(--on-navy-muted); text-align: right; }
+.glyph-cap .ja { color: #fff; font-size: 15px; }
+
+/* stat strip overlapping the band, as on Kanjiskole home */
+.strip { margin-top: -40px; position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; border-radius: var(--r-card); overflow: hidden; box-shadow: 0 10px 30px rgba(10,11,92,.18); }
+.strip > div { padding: 18px 20px; min-width: 0; }
+.strip > div:first-child { background: var(--card); }
+.strip > div:last-child { background: var(--navy); color: var(--on-navy); }
+.strip small { display: block; font-size: 13px; color: var(--muted); }
+.strip > div:last-child small { color: var(--on-navy-muted); }
+.strip strong { display: block; font-size: 22px; line-height: 1.25; margin-top: 4px; }
+.strip > div:last-child strong { color: var(--highlight); }
+
+/* sections */
+section { padding-block: 64px 8px; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--warm); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+.eyebrow .ja { font-size: 16px; letter-spacing: 0; text-transform: none; color: var(--muted); font-weight: 500; }
+h2 { font-family: var(--f-display); font-weight: 600; font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 8px 0 22px; letter-spacing: -.01em; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 62ch; margin: -8px 0 26px; }
+
+.grid3 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.card { position: relative; overflow: hidden; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); padding: 22px; min-width: 0; transition: background-color 1.2s ease, border-color 1.2s ease; }
+.card h3 { margin: 0 0 6px; font-size: 19px; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+.card .bg-k { position: absolute; right: -6px; top: -14px; font-family: var(--f-ja); font-size: 112px; line-height: 1; color: var(--ink); opacity: .06; pointer-events: none; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+.tag { font-size: 12.5px; padding: 3px 11px; border-radius: var(--r-pill); background: var(--warm-soft); color: var(--warm); font-weight: 500; }
+.tag.blue { background: transparent; border: 1px solid var(--line); color: var(--blue); }
+
+.projects { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.proj { display: grid; gap: 14px; text-decoration: none; }
+.proj .shot { height: 168px; border-radius: 12px; background: var(--navy); position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 16px; color: #fff; }
+.proj .shot::before { content: ""; position: absolute; left: 42%; top: 40px; width: 360px; height: 360px; border-radius: 70px; background: var(--swoosh); transform: rotate(28deg); }
+.proj .shot .ja { position: absolute; right: 14px; top: 2px; font-size: 120px; line-height: 1; color: var(--swoosh-glyph); }
+.proj .shot b { position: relative; font-size: 26px; font-weight: 700; }
+.proj .shot.dk { background: #5A0F1B; }
+.proj .shot.dk::before { background: #C8102E; }
+.proj .shot.dk .ja { color: #E23A52; font-family: var(--f-display); font-weight: 700; font-size: 110px; top: 10px; }
+.status { justify-self: start; font-size: 12.5px; font-weight: 700; padding: 4px 12px; border-radius: var(--r-pill); background: var(--blue); color: #fff; }
+.status.wip { background: transparent; border: 1px dashed var(--warm); color: var(--warm); }
+.proj .more { color: var(--blue); font-weight: 700; font-size: 15px; }
+
+/* gallery: full width */
+.gallery { display: grid; gap: 6px; grid-template-columns: repeat(6, 1fr); grid-auto-rows: clamp(90px, 14vw, 170px); padding-inline: max(6px, env(safe-area-inset-left, 0px)) max(6px, env(safe-area-inset-right, 0px)); }
+.ph { border-radius: 10px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 10px 12px; font-size: 12.5px; color: rgba(255,255,255,.85); }
+.ph:nth-child(1) { grid-column: span 3; grid-row: span 2; background: linear-gradient(160deg, #3D4A6B, #C98F5E); }
+.ph:nth-child(2) { grid-column: span 3; background: linear-gradient(200deg, #1E2A4A, #6C7FA8); }
+.ph:nth-child(3) { grid-column: span 2; background: linear-gradient(140deg, #A26B45, #E7C59A); }
+.ph:nth-child(4) { grid-column: span 1; background: linear-gradient(180deg, #2B1FD6, #0A0B5C); }
+.ph:nth-child(5) { grid-column: span 2; background: linear-gradient(120deg, #59665A, #B9B08E); }
+.ph:nth-child(6) { grid-column: span 2; background: linear-gradient(170deg, #22263D, #8A5A7A); }
+.ph:nth-child(7) { grid-column: span 2; background: linear-gradient(150deg, #6B3E2A, #D49A6A); }
+@media (max-width: 640px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .ph:nth-child(n) { grid-column: span 1; grid-row: span 1; }
+  .ph:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+}
+.gallery-note { margin-top: 12px; font-size: 13px; color: var(--muted); }
+
+/* /now */
+.now { display: grid; gap: 0; background: var(--card); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; }
+.now div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 14px 20px; border-top: 1px solid var(--line); min-width: 0; }
+.now div:first-child { border-top: 0; }
+.now dt { color: var(--muted); font-size: 14px; }
+.now dd { margin: 0; }
+.now .todo { color: var(--warm); font-style: italic; }
+.stamp { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+/* contact + footer */
+.contact { margin-top: 64px; background: var(--navy); color: var(--on-navy); border-radius: 22px; padding: 34px 28px; position: relative; overflow: hidden; isolation: isolate; display: grid; gap: 14px; }
+.contact::before { content: ""; position: absolute; right: -180px; top: -120px; width: 420px; height: 420px; border-radius: 90px; background: var(--swoosh); transform: rotate(28deg); z-index: -1; }
+.contact h2 { color: #fff; margin: 0; }
+.contact p { margin: 0; color: var(--on-navy-muted); max-width: 52ch; }
+.addr { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.addr code { font-family: var(--f-ui); font-weight: 700; font-size: 17px; background: rgba(255,255,255,.08); padding: 10px 16px; border-radius: var(--r-pill); user-select: all; }
+.addr button { font: inherit; font-weight: 700; font-size: 15px; background: #fff; color: var(--swoosh); border: 0; border-radius: var(--r-pill); padding: 10px 18px; cursor: pointer; }
+footer { padding-block: 40px 56px; font-size: 13.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 8px 20px; justify-content: space-between; }
+footer .ja { font-size: 15px; }
+
+.toast { position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); opacity: 0; background: var(--navy); color: #fff; padding: 12px 20px; border-radius: var(--r-pill); font-size: 15px; box-shadow: 0 10px 30px rgba(0,0,0,.3); transition: opacity .5s ease, transform .5s ease; z-index: 60; pointer-events: none; max-width: calc(100% - 32px); text-align: center; }
+.toast.on { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) { *, *::before { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="mock" role="region" aria-label="Mock-up controls">
+  <div class="wrap">
+    <b>Mock-up</b>
+    <span>Tid: <span class="seg" id="modeSeg">
+      <button type="button" data-mode="auto" aria-pressed="true">Auto (ur)</button>
+      <button type="button" data-mode="day" aria-pressed="false">Dag</button>
+      <button type="button" data-mode="evening" aria-pressed="false">Aften</button>
+    </span></span>
+    <span>Hero-tegn: <span class="seg" id="glyphSeg"></span></span>
+  </div>
+</div>
+
+<header class="band" id="band">
+  <div class="hero-glyph ja" id="heroGlyph" aria-hidden="true">守</div>
+  <div class="wrap">
+    <nav class="top" aria-label="Main">
+      <a class="mark" href="#top"><span class="circ ja">レ</span><span>Lena Gibson</span></a>
+      <div class="links">
+        <a href="#work" data-i18n="nav.work">Arbejde</a>
+        <a href="#projects" data-i18n="nav.projects">Projekter</a>
+        <a href="#photos" data-i18n="nav.photos">Fotos</a>
+        <a href="#now" data-i18n="nav.now">Nu</a>
+        <button class="lang" id="langBtn" type="button" aria-label="Switch language">EN</button>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="greet" id="greet">God aften. Jeg hedder Lena.</div>
+      <h1 data-i18n-html="hero.h1">Jeg finder ud af, hvad der skete. <em>Og sørger for, at det ikke sker igen.</em></h1>
+      <div class="meta"><span data-i18n="hero.role">Senior Security Engineer</span><span class="dot">·</span>Novonesis<span class="dot">·</span>København</div>
+      <div class="actions">
+        <a class="pill primary" href="#work" data-i18n="hero.cta">Se mit arbejde</a>
+        <a class="pill ghost" href="#contact" data-i18n="hero.contact">Skriv til mig</a>
+      </div>
+    </div>
+  </div>
+  <div class="glyph-cap" id="glyphCap"><span class="ja">守る</span> mamoru · <span data-i18n="glyph.守">at beskytte</span></div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="strip" aria-label="Short version">
+      <div><small data-i18n="strip.a.k">Før</small><strong>Microsoft DART</strong></div>
+      <div><small data-i18n="strip.b.k">Fritid</small><strong data-i18n="strip.b.v">Apps, fotos, kanelsnegle</strong></div>
+    </div>
+
+    <section id="work">
+      <div class="eyebrow"><span data-i18n="work.eyebrow">Arbejde</span><span class="ja">仕事</span></div>
+      <h2 data-i18n="work.h2">Når noget er gået galt, og når det ikke må</h2>
+      <div class="grid3">
+        <article class="card"><span class="bg-k ja" aria-hidden="true">調</span>
+          <h3 data-i18n="w1.h">Incident response</h3>
+          <p data-i18n="w1.p">Undersøgelser af store kompromitteringer hos Microsoft DART, ude hos kunden og på tværs af tidszoner.</p>
+          <div class="tags"><span class="tag">Forensics</span><span class="tag">Threat hunting</span></div>
+        </article>
+        <article class="card"><span class="bg-k ja" aria-hidden="true">検</span>
+          <h3 data-i18n="w2.h">Detection & response</h3>
+          <p data-i18n="w2.p">SIEM, SOAR og XDR, der finder det rigtige og lader resten være. Plus KQL, der kan læses bagefter.</p>
+          <div class="tags"><span class="tag">Sentinel</span><span class="tag">Defender XDR</span><span class="tag">KQL</span></div>
+        </article>
+        <article class="card"><span class="bg-k ja" aria-hidden="true">雲</span>
+          <h3 data-i18n="w3.h">Cloud & OT</h3>
+          <p data-i18n="w3.p">Azure-sikkerhed og industrielle miljøer, hvor man ikke bare genstarter noget for at se, hvad der sker.</p>
+          <div class="tags"><span class="tag">Azure</span><span class="tag">OT</span><span class="tag">SC-200</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="eyebrow"><span data-i18n="proj.eyebrow">Projekter</span><span class="ja">作品</span></div>
+      <h2 data-i18n="proj.h2">Ting, jeg bygger om aftenen</h2>
+      <p class="lede" data-i18n="proj.lede">Samme regler som på arbejdet: ingen trackere, data bliver på din enhed, kildekoden er åben.</p>
+      <div class="projects">
+        <a class="card proj" href="https://github.com/Lena-LSG/Kanjiskole">
+          <div class="shot"><span class="ja" aria-hidden="true">読</span><b>Kanjiskole</b></div>
+          <span class="status">v1.0 · Android & web</span>
+          <div><h3 data-i18n="p1.h">Lær at læse japansk</h3>
+            <p data-i18n="p1.p">Kanji i rigtige ord, kana og ordforråd med spaced repetition (FSRS). Virker offline. GPL-3.0.</p></div>
+          <div class="tags"><span class="tag blue">React Native</span><span class="tag blue">Expo</span><span class="tag blue">TypeScript</span></div>
+          <span class="more" data-i18n="p1.more">Kildekode og APK →</span>
+        </a>
+        <div class="card proj">
+          <div class="shot dk"><span class="ja" aria-hidden="true">Æ</span><b>DANSK</b></div>
+          <span class="status wip" data-i18n="p2.status">Under ombygning</span>
+          <div><h3 data-i18n="p2.h">Indfødsretsprøven, og så lidt mere</h3>
+            <p data-i18n="p2.p">Træning til prøven, der følger med, når spørgsmålene skifter. Snart med et sprogspor: en/et, på/i og stød.</p></div>
+          <div class="tags"><span class="tag blue">FSRS</span><span class="tag blue">Kun åbne kilder</span></div>
+          <span class="more" style="color:var(--muted)" data-i18n="p2.more">Kommer i 2027</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section id="photos">
+    <div class="wrap">
+      <div class="eyebrow"><span data-i18n="ph.eyebrow">Fotos</span><span class="ja">写真</span></div>
+      <h2 data-i18n="ph.h2">København, mest i dårligt vejr</h2>
+    </div>
+    <div class="gallery" aria-label="Photo placeholders">
+      <div class="ph">1 · hero</div><div class="ph">2</div><div class="ph">3</div><div class="ph">4</div><div class="ph">5</div><div class="ph">6</div><div class="ph">7</div>
+    </div>
+    <div class="wrap"><p class="gallery-note" data-i18n="ph.note">Pladsholdere. Dine billeder kommer her, uden EXIF og GPS.</p></div>
+  </section>
+
+  <div class="wrap">
+    <section id="now">
+      <div class="eyebrow"><span>/nu</span><span class="ja">今</span></div>
+      <h2 data-i18n="now.h2">Hvad jeg laver lige nu</h2>
+      <dl class="now">
+        <div><dt data-i18n="now.build">Bygger</dt><dd data-i18n="now.build.v">Den her side. Så DANSK 2.0.</dd></div>
+        <div><dt data-i18n="now.learn">Lærer</dt><dd data-i18n="now.learn.v">Japansk fra B2 mod C1. Dansk stød, som ingen nogensinde har mestret.</dd></div>
+        <div><dt data-i18n="now.play">Spiller</dt><dd class="todo" data-i18n="now.todo">[udfyld]</dd></div>
+        <div><dt data-i18n="now.watch">Ser</dt><dd class="todo" data-i18n="now.todo">[udfyld]</dd></div>
+        <div><dt data-i18n="now.eat">Spiser</dt><dd data-i18n="now.eat.v">Kanelsnegle. Forskningen fortsætter.</dd></div>
+      </dl>
+      <p class="stamp" data-i18n="now.stamp">Opdateret november 2026.</p>
+    </section>
+
+    <div class="contact" id="contact">
+      <h2 data-i18n="c.h2">Sig hej</h2>
+      <p data-i18n="c.p">Ingen kontaktformular, så der er ikke noget at spamme eller hacke. Bare en mail.</p>
+      <div class="addr"><code id="mail">hej@lenagibson.eu</code><button type="button" id="copyBtn" data-i18n="c.copy">Kopiér</button></div>
+    </div>
+
+    <footer>
+      <span data-i18n="f.a">Ingen cookies. Ingen trackere. Ingen grund til et cookiebanner.</span>
+      <span><span class="ja">ありがとう</span> · <a href="https://github.com/Lena-LSG/portfolio" data-i18n="f.src">Kildekode</a></span>
+    </footer>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const $ = (s) => document.querySelector(s);
+  const root = document.documentElement;
+
+  const GLYPHS = {
+    "守": { word: "守る", rom: "mamoru", da: "at beskytte", en: "to protect" },
+    "灯": { word: "灯り", rom: "akari", da: "lampelys", en: "lamplight" },
+    "鍵": { word: "鍵", rom: "kagi", da: "nøgle, lås", en: "key, lock" },
+    "光": { word: "光", rom: "hikari", da: "lys", en: "light" },
+    "縁": { word: "縁", rom: "en", da: "bånd mellem mennesker", en: "a bond between people" },
+  };
+  const T = {
+    en: {
+      "nav.work": "Work", "nav.projects": "Projects", "nav.photos": "Photos", "nav.now": "Now",
+      "hero.h1": "I work out what happened. <em>Then I make sure it doesn’t happen again.</em>",
+      "hero.role": "Senior Security Engineer", "hero.cta": "See my work", "hero.contact": "Get in touch",
+      "strip.a.k": "Before", "strip.b.k": "Off hours", "strip.b.v": "Apps, photos, cinnamon buns",
+      "work.eyebrow": "Work", "work.h2": "When something has gone wrong, and when it mustn’t",
+      "w1.h": "Incident response", "w1.p": "Large-scale compromise investigations with Microsoft DART, on site and across time zones.",
+      "w2.h": "Detection & response", "w2.p": "SIEM, SOAR and XDR that find the right thing and leave the rest alone. Plus KQL you can still read afterwards.",
+      "w3.h": "Cloud & OT", "w3.p": "Azure security and industrial environments, where you don’t restart something just to see what happens.",
+      "proj.eyebrow": "Projects", "proj.h2": "Things I build in the evenings", "proj.lede": "Same rules as at work: no trackers, your data stays on your device, the source is open.",
+      "p1.h": "Learn to read Japanese", "p1.p": "Kanji in real words, kana and vocabulary on spaced repetition (FSRS). Works offline. GPL-3.0.", "p1.more": "Source and APK →",
+      "p2.status": "Being rebuilt", "p2.h": "The Danish citizenship test, and a bit more", "p2.p": "Practice that keeps up when the questions change. Soon with a language track: en/et, på/i and stød.", "p2.more": "Coming in 2027",
+      "ph.eyebrow": "Photos", "ph.h2": "Copenhagen, mostly in bad weather", "ph.note": "Placeholders. Your photos go here, without EXIF or GPS.",
+      "now.h2": "What I’m doing now", "now.build": "Building", "now.build.v": "This site. Then DANSK 2.0.",
+      "now.learn": "Learning", "now.learn.v": "Japanese from B2 towards C1. Danish stød, which nobody has ever mastered.",
+      "now.play": "Playing", "now.watch": "Watching", "now.eat": "Eating", "now.eat.v": "Cinnamon buns. Research is ongoing.", "now.todo": "[fill in]", "now.stamp": "Updated November 2026.",
+      "c.h2": "Say hello", "c.p": "No contact form, so there’s nothing to spam or hack. Just an email.", "c.copy": "Copy",
+      "f.a": "No cookies. No trackers. No reason for a cookie banner.", "f.src": "Source",
+    },
+  };
+  const DA = {};
+  document.querySelectorAll("[data-i18n]").forEach(el => DA[el.dataset.i18n] = el.textContent);
+  document.querySelectorAll("[data-i18n-html]").forEach(el => DA[el.dataset.i18nHtml] = el.innerHTML);
+  T.da = DA;
+
+  let lang = "da", glyph = "守", mode = "auto";
+
+  function hour() { return new Date().getHours(); }
+  function isEvening() { const h = hour(); return h >= 18 || h < 7; }
+  function greeting() {
+    const h = hour();
+    const da = h < 5 ? "Godnat" : h < 10 ? "Godmorgen" : h < 12 ? "God formiddag" : h < 18 ? "God eftermiddag" : "God aften";
+    const en = h < 5 ? "Still up?" : h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+    return lang === "da" ? `${da}. Jeg hedder Lena.` : `${en}. I’m Lena.`;
+  }
+  function applyMode() {
+    const evening = mode === "evening" || (mode === "auto" && isEvening());
+    root.dataset.mode = evening ? "evening" : "day";
+    document.querySelectorAll("#modeSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+  }
+  function applyGlyph() {
+    const g = GLYPHS[glyph];
+    const el = $("#heroGlyph");
+    el.style.opacity = 0;
+    setTimeout(() => { el.textContent = glyph; el.style.opacity = 1; }, 250);
+    $("#glyphCap").innerHTML = `<span class="ja">${g.word}</span> ${g.rom} · ${lang === "da" ? g.da : g.en}`;
+    document.querySelectorAll("#glyphSeg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.g === glyph)));
+  }
+  function applyLang() {
+    root.lang = lang;
+    const t = T[lang];
+    document.querySelectorAll("[data-i18n]").forEach(el => { const v = t[el.dataset.i18n]; if (v) el.textContent = v; });
+    document.querySelectorAll("[data-i18n-html]").forEach(el => { const v = t[el.dataset.i18nHtml]; if (v) el.innerHTML = v; });
+    $("#langBtn").textContent = lang === "da" ? "EN" : "DA";
+    $("#greet").textContent = greeting();
+    applyGlyph();
+  }
+
+  const gs = $("#glyphSeg");
+  Object.keys(GLYPHS).forEach(k => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "glyph-btn"; b.dataset.g = k; b.textContent = k; b.lang = "ja";
+    b.title = `${GLYPHS[k].rom}: ${GLYPHS[k].en}`;
+    b.addEventListener("click", () => { glyph = k; applyGlyph(); });
+    gs.appendChild(b);
+  });
+  document.querySelectorAll("#modeSeg button").forEach(b => b.addEventListener("click", () => { mode = b.dataset.mode; applyMode(); }));
+  $("#langBtn").addEventListener("click", () => { lang = lang === "da" ? "en" : "da"; applyLang(); });
+
+  // toast
+  let tt;
+  function toast(msg) { const el = $("#toast"); el.textContent = msg; el.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => el.classList.remove("on"), 2600); }
+
+  $("#copyBtn").addEventListener("click", () => {
+    const txt = $("#mail").textContent;
+    const done = () => toast(lang === "da" ? "Adressen er kopieret." : "Address copied.");
+    try { navigator.clipboard.writeText(txt).then(done, () => { selectMail(); }); } catch { selectMail(); }
+  });
+  function selectMail() { const r = document.createRange(); r.selectNodeContents($("#mail")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast(lang === "da" ? "Markeret. Tryk kopiér." : "Selected. Press copy."); }
+
+  // Easter egg 1: type "robot" anywhere
+  let buf = "";
+  addEventListener("keydown", e => {
+    if (e.key.length !== 1) return;
+    buf = (buf + e.key.toLowerCase()).slice(-5);
+    if (buf === "robot") toast(lang === "da" ? "Bip bop. Robotten hilser." : "Beep boop. The robot says hi.");
+  });
+  // Easter egg 2: tap the big glyph five times
+  let taps = 0, tapT;
+  $("#band").addEventListener("click", e => {
+    if (e.target.closest("a,button")) return;
+    taps++; clearTimeout(tapT); tapT = setTimeout(() => taps = 0, 1200);
+    if (taps === 5) { taps = 0; toast(lang === "da" ? "Incident lukket. Root cause: for mange tryk." : "Incident closed. Root cause: too many taps."); }
+  });
+  // Easter egg 3: for the people who read source
+  console.log("%c守%c  Hej. Hvis du leder efter sårbarheder: security.txt ligger på /.well-known/. Tak, fordi du kigger.", "font-size:28px;color:#3A30E0", "font-size:13px");
+
+  applyMode(); applyLang();
+  requestAnimationFrame(() => setTimeout(() => $("#band").classList.add("settle"), 60));
+  setInterval(() => { if (mode === "auto") applyMode(); $("#greet").textContent = greeting(); }, 60000);
+})();
+</script>
