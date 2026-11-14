@@ -90,7 +90,7 @@ nav.top { display: flex; align-items: center; justify-content: space-between; ga
 .strip > div:last-child { background: var(--navy); color: var(--on-navy); }
 .strip small { display: block; font-size: 13px; color: var(--muted); }
 .strip > div:last-child small { color: var(--on-navy-muted); }
-.strip strong { display: block; font-size: 22px; line-height: 1.25; margin-top: 4px; }
+.strip strong { display: block; font-size: clamp(16px, 2.6vw, 22px); line-height: 1.25; margin-top: 4px; }
 .strip > div:last-child strong { color: var(--highlight); }
 
 /* sections */
@@ -115,9 +115,7 @@ h2 { font-family: var(--f-display); font-weight: 600; font-size: clamp(28px, 4vw
 .proj .shot::before { content: ""; position: absolute; left: 42%; top: 40px; width: 360px; height: 360px; border-radius: 70px; background: var(--swoosh); transform: rotate(28deg); }
 .proj .shot .ja { position: absolute; right: 14px; top: 2px; font-size: 120px; line-height: 1; color: var(--swoosh-glyph); }
 .proj .shot b { position: relative; font-size: 26px; font-weight: 700; }
-.proj .shot.dk { background: #5A0F1B; }
-.proj .shot.dk::before { background: #C8102E; }
-.proj .shot.dk .ja { color: #E23A52; font-family: var(--f-display); font-weight: 700; font-size: 110px; top: 10px; }
+.proj .shot .dk-glyph { font-family: var(--f-display); font-weight: 700; font-size: 110px; top: 10px; }
 .status { justify-self: start; font-size: 12.5px; font-weight: 700; padding: 4px 12px; border-radius: var(--r-pill); background: var(--blue); color: #fff; }
 .status.wip { background: transparent; border: 1px dashed var(--warm); color: var(--warm); }
 .proj .more { color: var(--blue); font-weight: 700; font-size: 15px; }
@@ -183,8 +181,8 @@ footer .ja { font-size: 15px; }
     <nav class="top" aria-label="Main">
       <a class="mark" href="#top"><span class="circ ja">レ</span><span>Lena Gibson</span></a>
       <div class="links">
-        <a href="#work" data-i18n="nav.work">Arbejde</a>
         <a href="#projects" data-i18n="nav.projects">Projekter</a>
+        <a href="#work" data-i18n="nav.work">Arbejde</a>
         <a href="#photos" data-i18n="nav.photos">Fotos</a>
         <a href="#now" data-i18n="nav.now">Nu</a>
         <button class="lang" id="langBtn" type="button" aria-label="Switch language">EN</button>
@@ -207,10 +205,33 @@ footer .ja { font-size: 15px; }
 <main id="top">
   <div class="wrap">
     <div class="strip" aria-label="Short version">
-      <div><small data-i18n="strip.a.k">Før</small><strong>Microsoft DART</strong></div>
-      <div><small data-i18n="strip.b.k">Fritid</small><strong data-i18n="strip.b.v">Apps, fotos, kanelsnegle</strong></div>
+      <div><small data-i18n="strip.a.k">Før</small><strong data-i18n="strip.a.v">Microsoft DART og internationale organisationer</strong></div>
+      <div><small data-i18n="strip.b.k">Fritid</small><strong data-i18n="strip.b.v">Spil, anime, fotos, kanelsnegle</strong></div>
     </div>
 
+    <section id="projects">
+      <div class="eyebrow"><span data-i18n="proj.eyebrow">Projekter</span><span class="ja">作品</span></div>
+      <h2 data-i18n="proj.h2">Ting, jeg bygger om aftenen</h2>
+      <p class="lede" data-i18n="proj.lede">Samme regler som på arbejdet: ingen trackere, data bliver på din enhed, kildekoden er åben.</p>
+      <div class="projects">
+        <a class="card proj" href="https://github.com/Lena-LSG/Kanjiskole">
+          <div class="shot"><span class="ja" aria-hidden="true">読</span><b>Kanjiskole</b></div>
+          <span class="status">v1.0 · Android & web</span>
+          <div><h3 data-i18n="p1.h">Lær at læse japansk</h3>
+            <p data-i18n="p1.p">Kanji i rigtige ord, kana og ordforråd med spaced repetition (FSRS). Offline, ingen trackere, sikkerhedsgennemgået og REUSE-compliant. GPL-3.0.</p></div>
+          <div class="tags"><span class="tag blue">React Native</span><span class="tag blue">TypeScript</span><span class="tag" data-i18n="tag.tm">Trusselsmodel</span><span class="tag">REUSE</span></div>
+          <span class="more" data-i18n="p1.more">Kildekode og APK →</span>
+        </a>
+        <div class="card proj">
+          <div class="shot"><span class="ja dk-glyph" aria-hidden="true">Æ</span><b>DANSK</b></div>
+          <span class="status wip" data-i18n="p2.status">Live · redesign på vej</span>
+          <div><h3 data-i18n="p2.h">Indfødsretsprøven, og så lidt mere</h3>
+            <p data-i18n="p2.p">Træning til prøven, der følger med, når spørgsmålene skifter. Snart med et sprogspor: en/et, på/i og stød.</p></div>
+          <div class="tags"><span class="tag blue">FSRS</span><span class="tag blue">Kun åbne kilder</span></div>
+          <span class="more" style="color:var(--muted)" data-i18n="p2.more">Næste skridt: samme designsprog som Kanjiskole</span>
+        </div>
+      </div>
+    </section>
     <section id="work">
       <div class="eyebrow"><span data-i18n="work.eyebrow">Arbejde</span><span class="ja">仕事</span></div>
       <h2 data-i18n="work.h2">Når noget er gået galt, og når det ikke må</h2>
@@ -232,30 +253,6 @@ footer .ja { font-size: 15px; }
         </article>
       </div>
     </section>
-
-    <section id="projects">
-      <div class="eyebrow"><span data-i18n="proj.eyebrow">Projekter</span><span class="ja">作品</span></div>
-      <h2 data-i18n="proj.h2">Ting, jeg bygger om aftenen</h2>
-      <p class="lede" data-i18n="proj.lede">Samme regler som på arbejdet: ingen trackere, data bliver på din enhed, kildekoden er åben.</p>
-      <div class="projects">
-        <a class="card proj" href="https://github.com/Lena-LSG/Kanjiskole">
-          <div class="shot"><span class="ja" aria-hidden="true">読</span><b>Kanjiskole</b></div>
-          <span class="status">v1.0 · Android & web</span>
-          <div><h3 data-i18n="p1.h">Lær at læse japansk</h3>
-            <p data-i18n="p1.p">Kanji i rigtige ord, kana og ordforråd med spaced repetition (FSRS). Virker offline. GPL-3.0.</p></div>
-          <div class="tags"><span class="tag blue">React Native</span><span class="tag blue">Expo</span><span class="tag blue">TypeScript</span></div>
-          <span class="more" data-i18n="p1.more">Kildekode og APK →</span>
-        </a>
-        <div class="card proj">
-          <div class="shot dk"><span class="ja" aria-hidden="true">Æ</span><b>DANSK</b></div>
-          <span class="status wip" data-i18n="p2.status">Under ombygning</span>
-          <div><h3 data-i18n="p2.h">Indfødsretsprøven, og så lidt mere</h3>
-            <p data-i18n="p2.p">Træning til prøven, der følger med, når spørgsmålene skifter. Snart med et sprogspor: en/et, på/i og stød.</p></div>
-          <div class="tags"><span class="tag blue">FSRS</span><span class="tag blue">Kun åbne kilder</span></div>
-          <span class="more" style="color:var(--muted)" data-i18n="p2.more">Kommer i 2027</span>
-        </div>
-      </div>
-    </section>
   </div>
 
   <section id="photos">
@@ -275,7 +272,7 @@ footer .ja { font-size: 15px; }
       <h2 data-i18n="now.h2">Hvad jeg laver lige nu</h2>
       <dl class="now">
         <div><dt data-i18n="now.build">Bygger</dt><dd data-i18n="now.build.v">Den her side. Så DANSK 2.0.</dd></div>
-        <div><dt data-i18n="now.learn">Lærer</dt><dd data-i18n="now.learn.v">Japansk fra B2 mod C1. Dansk stød, som ingen nogensinde har mestret.</dd></div>
+        <div><dt data-i18n="now.learn">Lærer</dt><dd data-i18n="now.learn.v">Japansk, med min egen app. Dansk stød, som ingen nogensinde har mestret.</dd></div>
         <div><dt data-i18n="now.play">Spiller</dt><dd class="todo" data-i18n="now.todo">[udfyld]</dd></div>
         <div><dt data-i18n="now.watch">Ser</dt><dd class="todo" data-i18n="now.todo">[udfyld]</dd></div>
         <div><dt data-i18n="now.eat">Spiser</dt><dd data-i18n="now.eat.v">Kanelsnegle. Forskningen fortsætter.</dd></div>
@@ -315,17 +312,17 @@ footer .ja { font-size: 15px; }
       "nav.work": "Work", "nav.projects": "Projects", "nav.photos": "Photos", "nav.now": "Now",
       "hero.h1": "I work out what happened. <em>Then I make sure it doesn’t happen again.</em>",
       "hero.role": "Senior Security Engineer", "hero.cta": "See my work", "hero.contact": "Get in touch",
-      "strip.a.k": "Before", "strip.b.k": "Off hours", "strip.b.v": "Apps, photos, cinnamon buns",
+      "strip.a.k": "Before", "strip.a.v": "Microsoft DART and international organisations", "strip.b.k": "Off hours", "strip.b.v": "Games, anime, photos, cinnamon buns",
       "work.eyebrow": "Work", "work.h2": "When something has gone wrong, and when it mustn’t",
       "w1.h": "Incident response", "w1.p": "Large-scale compromise investigations with Microsoft DART, on site and across time zones.",
       "w2.h": "Detection & response", "w2.p": "SIEM, SOAR and XDR that find the right thing and leave the rest alone. Plus KQL you can still read afterwards.",
       "w3.h": "Cloud & OT", "w3.p": "Azure security and industrial environments, where you don’t restart something just to see what happens.",
       "proj.eyebrow": "Projects", "proj.h2": "Things I build in the evenings", "proj.lede": "Same rules as at work: no trackers, your data stays on your device, the source is open.",
-      "p1.h": "Learn to read Japanese", "p1.p": "Kanji in real words, kana and vocabulary on spaced repetition (FSRS). Works offline. GPL-3.0.", "p1.more": "Source and APK →",
-      "p2.status": "Being rebuilt", "p2.h": "The Danish citizenship test, and a bit more", "p2.p": "Practice that keeps up when the questions change. Soon with a language track: en/et, på/i and stød.", "p2.more": "Coming in 2027",
+      "p1.h": "Learn to read Japanese", "p1.p": "Kanji in real words, kana and vocabulary on spaced repetition (FSRS). Offline, no trackers, security-reviewed and REUSE-compliant. GPL-3.0.", "tag.tm": "Threat model", "p1.more": "Source and APK →",
+      "p2.status": "Live · redesign underway", "p2.h": "The Danish citizenship test, and a bit more", "p2.p": "Practice that keeps up when the questions change. Soon with a language track: en/et, på/i and stød.", "p2.more": "Next: the same design language as Kanjiskole",
       "ph.eyebrow": "Photos", "ph.h2": "Copenhagen, mostly in bad weather", "ph.note": "Placeholders. Your photos go here, without EXIF or GPS.",
       "now.h2": "What I’m doing now", "now.build": "Building", "now.build.v": "This site. Then DANSK 2.0.",
-      "now.learn": "Learning", "now.learn.v": "Japanese from B2 towards C1. Danish stød, which nobody has ever mastered.",
+      "now.learn": "Learning", "now.learn.v": "Japanese, with my own app. Danish stød, which nobody has ever mastered.",
       "now.play": "Playing", "now.watch": "Watching", "now.eat": "Eating", "now.eat.v": "Cinnamon buns. Research is ongoing.", "now.todo": "[fill in]", "now.stamp": "Updated November 2026.",
       "c.h2": "Say hello", "c.p": "No contact form, so there’s nothing to spam or hack. Just an email.", "c.copy": "Copy",
       "f.a": "No cookies. No trackers. No reason for a cookie banner.", "f.src": "Source",
