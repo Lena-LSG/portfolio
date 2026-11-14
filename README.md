@@ -3,48 +3,59 @@
 Source for [lenagibson.eu](https://lenagibson.eu), the personal site of Lena Gibson: security engineer in
 København, builder of small apps, taker of photos in bad weather.
 
-The site is static: no trackers, no cookies, no contact form, no third-party scripts.
+Static, built with [Eleventy](https://www.11ty.dev/). No trackers, no cookies, no contact form, no
+third-party requests, no inline code. Danish at `/`, English at `/en/`.
 
-## Status
+## Build
 
-`mockup/` holds the signed-off design: home, about, projects (with a Kanjiskole case study) and photos,
-in Danish and English, with a day and an evening mode. The next step is the real site in
-[Eleventy](https://www.11ty.dev/), with self-hosted fonts, separate `/en/` pages, strict security headers
-and `security.txt`. Hosting is still being decided.
+```sh
+npm ci
+npm run build        # writes _site/
+npm run serve        # local preview with live reload
+npm run check        # photo metadata + site rules (needs a build first)
+```
 
 ## Layout
 
 | Path | What |
 |---|---|
-| `mockup/build.py` | Generates the mock-up pages from shared templates |
-| `mockup/assets/` | Shared CSS and JavaScript |
-| `mockup/photos/` | Scrubbed photos, 800 px and 1600 px |
-| `tools/photos/` | `scrub.py` cleans photos, `verify.py` fails on any image metadata |
+| `src/pages/` | One template per page, rendered once per language |
+| `src/_data/t.js` | All page text, Danish and English side by side |
+| `src/_data/photos.js`, `timeline.js` | Captions and photo series; work history |
+| `src/_data/headers.js` | The security headers, rendered to `.htaccess`, `_headers` and an nginx snippet |
+| `src/assets/` | CSS, JavaScript, favicon, social preview images |
+| `src/photos/` | Scrubbed photos, 800 px and 1600 px |
+| `tools/photos/` | `scrub.py` cleans photos, `verify.py` fails on any image metadata, `manifest.py` records sizes |
+| `tools/check_site.py` | Fails the build on inline code, external resources, missing meta or a stale `security.txt` |
+| `tools/og/make.mjs` | Renders the social preview images |
 | `docs/PHOTOS.md` | How photos are added, and why "GPS off" is not enough |
 
-## Build the mock-up locally
+## Security
 
-```sh
-pip install -r tools/photos/requirements.txt
-python3 mockup/build.py
-python3 -m http.server -d mockup 8000   # then open http://localhost:8000
-```
+- **CSP:** `default-src 'none'`, everything else `'self'`, `frame-ancestors 'none'`. No inline scripts or
+  styles, so no `'unsafe-inline'`.
+- **Headers:** HSTS (1 year, subdomains), `nosniff`, `Referrer-Policy: no-referrer`, a deny-all
+  `Permissions-Policy`, COOP/COEP/CORP. One source in `src/_data/headers.js`, whichever host serves it.
+- **`/.well-known/security.txt`** (RFC 9116), regenerated on every build with an expiry under a year.
+- **Fonts self-hosted**, dependencies pinned exactly, npm install scripts disabled (`.npmrc`).
+- **Photos** are rebuilt from pixels; CI fails on any metadata.
+
+Found something? See [`security.txt`](https://lenagibson.eu/.well-known/security.txt) or email lena@lenagibson.eu.
 
 ## Checks
 
-Every push runs two GitHub Actions workflows:
+Every push runs:
 
-- **Photo privacy:** `tools/photos/verify.py` fails if any image, file or embedded, carries metadata.
-- **Licensing:** `reuse lint` fails if any file lacks copyright and licence information.
+- **Site:** build, then `tools/check_site.py` on the output
+- **Photo privacy:** `tools/photos/verify.py`
+- **Licensing:** `reuse lint`
 
 ## Licence
 
 - **Code** is MIT. See `LICENSE`.
-- **Photos and written content** (biography, project texts, captions) are © Lena Gibson, all rights reserved.
+- **Photos and written content** (`src/photos/`, `src/_data/t.js`, `photos.js`, `timeline.js`) are © Lena Gibson,
+  all rights reserved.
 - **Kanjiskole screenshots** use the same terms as the Kanjiskole repository.
+- **Fonts** are SIL OFL 1.1.
 
 Exact terms per file are in `REUSE.toml` and `LICENSES/`. Credits are in `CREDITS.md`.
-
-## Security
-
-Found something? Email lena@lenagibson.eu. A `security.txt` arrives with the real site.

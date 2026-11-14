@@ -1,0 +1,58 @@
+---
+pagination:
+  data: site.langs
+  size: 1
+  alias: lang
+pageId: about
+permalink: "{{ site.pages.about | inLang(lang) }}index.html"
+layout: base.njk
+---
+{%- import "macros.njk" as m with context -%}
+  <div class="wrap page-head">
+    <h1>{{ t.about.h1_html | tr(lang) | safe }}</h1>
+    <p>{{ t.about.lede | tr(lang) }}</p>
+  </div>
+
+  <section>
+    <div class="wrap story">
+      <div class="prose">{% for p in t.about.story %}<p>{{ p | tr(lang) }}</p>{% endfor %}</div>
+      <figure>{{ m.img("lena-zurich", t.about.zurichAlt | tr(lang)) | safe }}<figcaption>{{ t.about.zurichCap | tr(lang) }}</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head"><h2>{{ t.about.exp | tr(lang) }}</h2></div>
+      <ol class="timeline">
+        {%- for e in timeline %}
+        <li{% if e.now %} class="now"{% endif %}><span class="when">{{ e.when | tr(lang) }}</span><div>
+          <h3>{{ e.title }}</h3><div class="org">{{ e.org | tr(lang) }}</div><p>{{ e.text | tr(lang) }}</p>
+          <div class="tags">{% for g in e.tags %}<span class="tag">{{ g }}</span>{% endfor %}</div></div></li>
+        {%- endfor %}
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head"><h2>{{ t.about.proof | tr(lang) }}</h2></div>
+      <div class="lena">
+        {%- for p in photos.lena %}
+        <figure>{{ m.img(p.name, p.alt | tr(lang), p.pos) | safe }}<figcaption>{{ p.cap | tr(lang) }}</figcaption></figure>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head"><h2>{{ t.about.facts | tr(lang) }}</h2></div>
+      <div class="facts">
+        <div class="fact"><h3>{{ t.about.langs | tr(lang) }}</h3><ul>{% for l in t.about.langList %}<li><b>{{ l.name | tr(lang) }}</b><span>{{ l.level | tr(lang) }}</span></li>{% endfor %}</ul></div>
+        <div class="fact"><h3>{{ t.about.tools | tr(lang) }}</h3><p>{{ t.about.toolsText | tr(lang) }}</p></div>
+        <div class="fact"><h3>{{ t.about.now | tr(lang) }}</h3><ul>{% for n in t.about.nowList %}<li><b>{{ n.k | tr(lang) }}</b><span>{{ n.v | tr(lang) }}</span></li>{% endfor %}</ul></div>
+        <div class="fact"><h3>{{ t.about.off | tr(lang) }}</h3><p>{{ t.about.offText | tr(lang) }}</p></div>
+      </div>
+      <p class="stamp">{{ t.about.stamp | tr(lang) }} {{ site.updated | tr(lang) }}.</p>
+    </div>
+  </section>

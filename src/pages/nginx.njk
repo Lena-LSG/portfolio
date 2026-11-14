@@ -1,0 +1,10 @@
+---
+permalink: /.nginx-headers.conf
+eleventyExcludeFromCollections: true
+---
+# Generated from src/_data/headers.js. Paste into Plesk: Apache & nginx Settings > Additional nginx directives.
+# Not served: the .htaccess rule blocks dotfiles.
+{%- for h in headers.list %}
+add_header {{ h[0] }} "{{ h[1] | safe }}" always;
+{%- endfor %}
+server_tokens off;

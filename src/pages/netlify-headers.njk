@@ -1,0 +1,13 @@
+---
+permalink: /_headers
+eleventyExcludeFromCollections: true
+---
+# Generated from src/_data/headers.js (Netlify / Cloudflare Pages format).
+/*
+{%- for h in headers.list %}
+  {{ h[0] }}: {{ h[1] | safe }}
+{%- endfor %}
+{% for p in headers.immutable %}
+{{ p }}*
+  Cache-Control: public, max-age=31536000, immutable
+{% endfor %}

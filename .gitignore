@@ -1,6 +1,10 @@
 # Original photos (with metadata) never get committed; only tools/photos/scrub.py output does
 tools/photos/inbox/
 
+# Build output and dependencies
+_site/
+node_modules/
+
 # Python
 __pycache__/
 

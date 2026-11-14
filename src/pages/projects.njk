@@ -1,0 +1,17 @@
+---
+pagination:
+  data: site.langs
+  size: 1
+  alias: lang
+pageId: projects
+permalink: "{{ site.pages.projects | inLang(lang) }}index.html"
+layout: base.njk
+---
+{%- import "macros.njk" as m with context -%}
+  <div class="wrap page-head">
+    <h1>{{ t.projects.h1_html | tr(lang) | safe }}</h1>
+    <p>{{ t.projects.lede | tr(lang) }}</p>
+  </div>
+  <section class="flush">
+    <div class="wrap">{{ m.cards() | safe }}</div>
+  </section>

@@ -1,0 +1,13 @@
+---
+permalink: /.well-known/security.txt
+eleventyExcludeFromCollections: true
+---
+{%- set exp = page.date.getTime() + 1000 * 60 * 60 * 24 * 330 -%}
+Contact: mailto:{{ site.email }}
+Expires: {{ exp | toDate | isoDate }}
+Preferred-Languages: en, da
+Canonical: {{ site.url }}/.well-known/security.txt
+
+# Found a problem with lenagibson.eu or one of my projects? Email me and I'll reply within a few days.
+# There is no bug bounty, but there is gratitude and credit if you want it.
+# Please don't test in ways that degrade the site for others.

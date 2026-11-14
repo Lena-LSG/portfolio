@@ -1,0 +1,47 @@
+---
+pagination:
+  data: site.langs
+  size: 1
+  alias: lang
+pageId: kanjiskole
+permalink: "{{ site.pages.kanjiskole | inLang(lang) }}index.html"
+layout: base.njk
+---
+{%- import "macros.njk" as m with context -%}
+  <div class="wrap page-head">
+    <div class="crumbs"><a href="{{ site.pages.projects | inLang(lang) }}">{{ t.nav.projects | tr(lang) }}</a> / Kanjiskole</div>
+    <h1>Kanjiskole</h1>
+    <p>{{ t.ks.lede | tr(lang) }}</p>
+  </div>
+  <section class="flush">
+    <div class="wrap">
+      <div class="phones" role="group" aria-label="{{ t.ks.shotsLabel | tr(lang) }}">
+        {%- for s in t.ks.shots %}<img src="/photos/{{ s.name }}.webp" width="416" height="900" alt="{{ s.alt | tr(lang) }}" loading="lazy" decoding="async">{% endfor %}
+      </div>
+      <div class="case">
+        <div class="prose">
+          <h2>{{ t.ks.h1 | tr(lang) }}</h2>
+          <p>{{ t.ks.p1 | tr(lang) }}</p>
+          <h2>{{ t.ks.h2 | tr(lang) }}</h2>
+          <ul>{% for li in t.ks.approach %}<li>{{ li | tr(lang) }}</li>{% endfor %}</ul>
+          <h2>{{ t.ks.h3 | tr(lang) }}</h2>
+          <p>{{ t.ks.p3 | tr(lang) }}</p>
+          <h2>{{ t.ks.h4 | tr(lang) }}</h2>
+          <ul>{% for li in t.ks.learned_html %}<li>{{ li | tr(lang) | safe }}</li>{% endfor %}</ul>
+          <h2>{{ t.ks.h5 | tr(lang) }}</h2>
+          <p>{{ t.ks.p5 | tr(lang) }}</p>
+        </div>
+        <aside>
+          <div class="fact"><ul>
+            <li><b>Status</b><span>v1.0.0</span></li>
+            <li><b>{{ t.ks.platforms | tr(lang) }}</b><span>Android, web</span></li>
+            <li><b>{{ t.ks.licence | tr(lang) }}</b><span>GPL-3.0</span></li>
+            <li><b>{{ t.ks.stack | tr(lang) }}</b><span>React Native, Expo, TypeScript</span></li>
+            <li><b>{{ t.ks.rep | tr(lang) }}</b><span>FSRS</span></li>
+          </ul></div>
+          <a class="btn" href="https://github.com/Lena-LSG/Kanjiskole">{{ t.ks.src | tr(lang) }}</a>
+          <a class="more" href="https://github.com/Lena-LSG/Kanjiskole/releases">{{ t.ks.apk | tr(lang) }}</a>
+        </aside>
+      </div>
+    </div>
+  </section>

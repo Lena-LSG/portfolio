@@ -1,0 +1,43 @@
+---
+permalink: /.htaccess
+eleventyExcludeFromCollections: true
+---
+# Generated from src/_data/headers.js. Apache with mod_headers, mod_rewrite and mod_expires.
+Options -Indexes -MultiViews
+ServerSignature Off
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # HTTPS only
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  # www -> apex
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+  # No dotfiles except /.well-known/
+  RewriteRule "(^|/)\.(?!well-known/)" - [F]
+  # English 404 for /en/
+  RewriteCond %{REQUEST_URI} ^/en/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ /en/404.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+{%- for h in headers.list %}
+  Header always set {{ h[0] }} "{{ h[1] | safe }}"
+{%- endfor %}
+  Header always unset X-Powered-By
+  <FilesMatch "\.(woff2|webp|png)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(html|css|js|txt|xml)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
+
+AddDefaultCharset utf-8
+AddType text/plain .txt
+AddType font/woff2 .woff2
+AddType image/webp .webp

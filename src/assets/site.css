@@ -1,3 +1,10 @@
+/* Self-hosted fonts (SIL OFL 1.1), copied from the @fontsource packages at build time. */
+@font-face { font-family: "Fraunces"; font-style: normal; font-weight: 100 900; font-display: swap; src: url("/assets/fonts/fraunces-latin-full-normal.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-style: italic; font-weight: 100 900; font-display: swap; src: url("/assets/fonts/fraunces-latin-full-italic.woff2") format("woff2"); }
+@font-face { font-family: "Zen Kaku Gothic New"; font-style: normal; font-weight: 400; font-display: swap; src: url("/assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Zen Kaku Gothic New"; font-style: normal; font-weight: 500; font-display: swap; src: url("/assets/fonts/zen-kaku-gothic-new-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Zen Kaku Gothic New"; font-style: normal; font-weight: 700; font-display: swap; src: url("/assets/fonts/zen-kaku-gothic-new-latin-700-normal.woff2") format("woff2"); }
+
 /* Layout: editorial personal homepage. Hero = words left, a small drawn friend in lamp light right.
    Kanjiskole gestures only (one big soft shape, the swoosh as the bun's spiral, rounded buttons, navy anchor).
    Words: sharp, nerdy, soft. Palette: warm paper, ink-navy anchor, cinnamon for text, rose for softness, amber for light. */
@@ -26,7 +33,7 @@
 ::selection { background: var(--rose-soft); color: var(--ink); }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-ui); font-size: 17px; line-height: 1.65; overflow-x: hidden; transition: background-color 1.4s ease, color 1.4s ease; }
 body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 40; opacity: var(--grain);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  background-image: url("/assets/grain.svg"); }
 .wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
 a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
 :focus-visible { outline: 2px solid var(--rose); outline-offset: 3px; border-radius: 4px; }
@@ -271,3 +278,35 @@ a.pcard:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -24px rgba(
 .series-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
 .series-nav a { text-decoration: none; font-size: 14.5px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); background: var(--surface); }
 .series-nav a:hover { border-color: var(--rose); }
+
+/* ---------- real-site additions ---------- */
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; }
+body { margin: 0; -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; }
+.skip { position: absolute; left: 12px; top: -60px; z-index: 70; background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 999px; text-decoration: none; }
+.skip:focus { top: 12px; }
+.seal { fill: var(--rose); }
+.seal-swirl { fill: none; stroke: #FFF7EE; stroke-width: 2.6; stroke-linecap: round; }
+a.tool { text-decoration: none; display: inline-block; }
+section.flush { border-top: 0; padding-top: 0; }
+.pos-graduation { object-position: 72% 50%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* hero friend shapes (drawn by site.js; colours here because inline styles are blocked by the CSP) */
+.f-shadow { fill: var(--face); opacity: .08; }
+.f-bun { fill: var(--bun); }
+.f-swirl { fill: none; stroke: var(--swirl); stroke-width: 7; stroke-linecap: round; opacity: .55; }
+.f-icing { fill: none; stroke: var(--icing); stroke-width: 7; stroke-linecap: round; }
+.f-face { fill: var(--face); }
+.f-white { fill: #fff; }
+.f-blush { fill: var(--rose); opacity: .75; }
+.f-line { fill: none; stroke: var(--face); stroke-width: 3.2; stroke-linecap: round; }
+.f-cat { fill: var(--cat); stroke: var(--cat); }
+.f-ear { fill: var(--cat-ear); stroke: var(--cat-ear); stroke-width: 5; stroke-linejoin: round; }
+.f-nose { fill: var(--rose); stroke: var(--rose); stroke-width: 2; stroke-linejoin: round; }
+.f-whisker { fill: none; stroke: var(--face); stroke-width: 2.4; stroke-linecap: round; opacity: .5; }
+.f-shark { fill: var(--shark); stroke: var(--shark); }
+.f-belly { fill: var(--belly); }
+.f-round12 { stroke-width: 12; stroke-linejoin: round; }
+.f-round8 { stroke-width: 8; stroke-linejoin: round; }
+:root[data-mode="evening"] .btn { background: var(--rose); color: #1E2434; }

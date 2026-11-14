@@ -1,0 +1,87 @@
+{%- set path = site.pages[pageId] -%}
+{%- set m = t.meta[pageId] -%}
+{%- set other = "en" if lang == "da" else "da" -%}
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="{{ headers.cspMeta }}">
+<meta name="referrer" content="no-referrer">
+<title>{{ m.title | tr(lang) }}</title>
+<meta name="description" content="{{ m.desc | tr(lang) }}">
+{%- if not noIndex %}
+<link rel="canonical" href="{{ site.url }}{{ path | inLang(lang) }}">
+<link rel="alternate" hreflang="da" href="{{ site.url }}{{ path }}">
+<link rel="alternate" hreflang="en" href="{{ site.url }}{{ path | inLang('en') }}">
+<link rel="alternate" hreflang="x-default" href="{{ site.url }}{{ path }}">
+{%- else %}
+<meta name="robots" content="noindex">
+{%- endif %}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lena Gibson">
+<meta property="og:title" content="{{ m.title | tr(lang) }}">
+<meta property="og:description" content="{{ m.desc | tr(lang) }}">
+<meta property="og:url" content="{{ site.url }}{{ path | inLang(lang) }}">
+<meta property="og:image" content="{{ site.url }}/assets/og-{{ lang }}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lena Gibson">
+<meta property="og:locale" content="{{ 'da_DK' if lang == 'da' else 'en_GB' }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F7F1EC">
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/zen-kaku-gothic-new-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/mode.js"></script>
+<script src="/assets/site.js" defer></script>
+</head>
+<body data-page="{{ pageId }}">
+<a class="skip" href="#main">{{ t.skip | tr(lang) }}</a>
+<header>
+  <div class="wrap">
+    <a class="brand" href="{{ '/' | inLang(lang) }}">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="10" class="seal"/><path d="{{ logoPath }}" class="seal-swirl"/></svg>
+      Lena Gibson
+    </a>
+    <nav aria-label="{{ 'Hovedmenu' if lang == 'da' else 'Main' }}">
+      <div class="links">
+        {%- for id in ["projects", "about", "photos"] %}
+        <a href="{{ site.pages[id] | inLang(lang) }}"{% if pageId == id or (id == "projects" and pageId == "kanjiskole") %} aria-current="page"{% endif %}>{{ t.nav[id] | tr(lang) }}</a>
+        {%- endfor %}
+        <a href="#contact">{{ t.nav.contact | tr(lang) }}</a>
+      </div>
+      <div class="tools">
+        <button class="tool" id="modeBtn" type="button" aria-label="{{ t.modeLabel | tr(lang) }}" hidden>{{ t.modeBtn | tr(lang) }}</button>
+        <a class="tool" href="{{ path | inLang(other) }}" hreflang="{{ other }}" lang="{{ other }}" aria-label="{{ t.otherLang | tr(lang) }}">{{ t.otherLangShort | tr(lang) }}</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+{{ content | safe }}
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>{{ t.contact.h2 | tr(lang) }}</h2>
+        <p>{{ t.contact.p | tr(lang) }}</p>
+        <div class="addr"><code id="mail">{{ site.email }}</code><button type="button" id="copyBtn" hidden>{{ t.contact.copy | tr(lang) }}</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>{{ t.footer.a | tr(lang) }}</span>
+    <span>{{ t.footer.thanks | tr(lang) }} · <a href="/.well-known/security.txt">{{ t.footer.sec | tr(lang) }}</a> · <a href="https://github.com/Lena-LSG/portfolio">{{ t.footer.src | tr(lang) }}</a></span>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="{{ t.lb.label | tr(lang) }}"><div class="inner"><img id="lbImg" alt=""><div class="bar"><p id="lbCap"></p><div class="ctl"><button type="button" id="lbPrev" aria-label="{{ t.lb.prev | tr(lang) }}">←</button><button type="button" id="lbNext" aria-label="{{ t.lb.next | tr(lang) }}">→</button><button type="button" id="lbClose">{{ t.lb.close | tr(lang) }}</button></div></div></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
