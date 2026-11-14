@@ -1,23 +1,11 @@
-# .gitignore
-
-# Ignore environment variables
-.env
-
-# Composer dependencies
-/vendor/
-
-# Node dependencies
-/node_modules/
-
-# IDE settings
-.vscode/
-
-# OS generated files
-Thumbs.db
-.DS_Store
-
-# Log files
-*.log
-# Original photos (with metadata) never get committed; only scrub.py output does
+# Original photos (with metadata) never get committed; only tools/photos/scrub.py output does
 tools/photos/inbox/
+
+# Python
 __pycache__/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

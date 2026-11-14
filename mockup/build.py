@@ -35,7 +35,7 @@ PHOTOS = {  # name: (Danish caption, English caption, series)
     "arts-et-metiers": ("Musée des Arts et Métiers, Paris. Clément Aders Avion III, et fly formet som en flagermus.", "Musée des Arts et Métiers, Paris. Clément Ader’s Avion III, a plane shaped like a bat.", "out"),
     "notre-dame": ("Notre-Dame de Paris", "Notre-Dame de Paris", "out"),
     "belval": ("Højovnene i Belval, Luxembourg. Industrielle styresystemer: her bliver jeg professionelt nervøs.", "The blast furnaces at Belval, Luxembourg. Industrial control systems: professionally, this is where I get nervous.", "out"),
-    "ghost-mural": ("Gadekunst, Luxembourg. Kunstner: kommer snart.", "Street art, Luxembourg. Artist credit: coming soon.", "out"),
+    "ghost-mural": ("Gadekunst, Luxembourg. Kunstneren er ukendt, så skriv endelig, hvis du ved, hvem det er.", "Street art, Luxembourg. The artist is unknown, so do get in touch if you know who it is.", "out"),
     "stephansdom": ("Stephansdom, Wien, set fra tårnet", "Stephansdom, Vienna, seen from the tower", "out"),
     "cormorant": ("En skarv, der tørrer vingerne. Genkendeligt.", "A cormorant drying off. Relatable.", "out"),
 }

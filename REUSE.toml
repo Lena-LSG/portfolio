@@ -1,0 +1,30 @@
+# Machine-readable licensing (https://reuse.software). CI runs `reuse lint`.
+version = 1
+
+# Code, tooling and docs: MIT.
+[[annotations]]
+path = "**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2024-2026 Lena Gibson"
+SPDX-License-Identifier = "MIT"
+
+# Lena's photographs: all rights reserved.
+[[annotations]]
+path = "mockup/photos/**"
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Lena Gibson"
+SPDX-License-Identifier = "LicenseRef-AllRightsReserved"
+
+# Screenshots of Kanjiskole, which show EDRDG dictionary data: same terms as in the Kanjiskole repo.
+[[annotations]]
+path = "mockup/photos/ks-*.webp"
+precedence = "override"
+SPDX-FileCopyrightText = ["2026 Lena Gibson", "Electronic Dictionary Research and Development Group"]
+SPDX-License-Identifier = "GPL-3.0-only AND CC-BY-SA-4.0"
+
+# Pages and the generator that holds their text: code is MIT, the written content is all rights reserved.
+[[annotations]]
+path = ["mockup/*.html", "mockup/build.py"]
+precedence = "override"
+SPDX-FileCopyrightText = "2026 Lena Gibson"
+SPDX-License-Identifier = "LicenseRef-SiteContent"
