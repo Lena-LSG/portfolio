@@ -1,0 +1,14 @@
+Mixed licence for page templates and generated pages.
+
+Copyright (c) Lena Gibson.
+
+These files mix code and personal content:
+
+- The code (HTML structure, CSS, JavaScript, Python) is licensed under the MIT licence;
+  see LICENSES/MIT.txt.
+- The written content (biography, project descriptions, captions and other text) and
+  every image the files embed or link to are all rights reserved. You may not copy,
+  modify, redistribute or use them elsewhere without written permission.
+  Ask: lena@lenagibson.eu
+
+If you reuse the code, replace the content with your own.

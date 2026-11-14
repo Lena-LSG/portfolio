@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Projekter · Lena Gibson</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="page" content="projects">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,400..700,0..100;1,9..144,400..700,0..100&amp;family=Zen+Kaku+Gothic+New:wght@400;500;700&amp;display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 34 34" aria-hidden="true"><rect width="34" height="34" rx="10" fill="var(--rose)"/><path id="miniSwirl" fill="none" stroke="#FFF7EE" stroke-width="2.6" stroke-linecap="round"/></svg>
+      Lena Gibson
+    </a>
+    <nav aria-label="Main">
+      <div class="links">
+        <a href="projects.html" data-page="projects" data-i18n="nav.projects">Projekter</a>
+        <a href="about.html" data-page="about" data-i18n="nav.about">Om mig</a>
+        <a href="photos.html" data-page="photos" data-i18n="nav.photos">Fotos</a>
+        <a href="#contact" data-i18n="nav.contact">Kontakt</a>
+      </div>
+      <div class="tools">
+        <button class="tool" id="modeBtn" type="button" aria-label="Dag/aften · Day/evening">Aften</button>
+        <button class="tool" id="langBtn" type="button" aria-label="Sprog · Language">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap page-head">
+    <h1 data-i18n-html="pr.h1">Ting, jeg <em>bygger</em></h1>
+    <p data-i18n="pr.lede">Fritidsprojekter med samme standard som på arbejdet: trusselsmodel først, ingen trackere og åben kildekode.</p>
+  </div>
+  <section style="border-top: 0; padding-top: 0">
+    <div class="wrap">
+      <div class="cards">
+        <a class="pcard" href="kanjiskole.html"><div class="panel ks"><img src="photos/ks-home.webp" alt="" width="416" height="900" loading="lazy"><img src="photos/ks-word.webp" alt="" width="416" height="900" loading="lazy"></div>
+          <div class="body"><div class="meta">Android · Web · GPL-3.0</div><h3>Kanjiskole</h3>
+            <p data-i18n="p1.short">En app, der lærer dig at læse japansk: kanji i rigtige ord, med spaced repetition. Offline, uden konti og uden trackere.</p>
+            <span class="go" data-i18n="p1.go">Læs case study →</span></div></a>
+        <div class="pcard"><div class="panel dk"><div class="letters">æ<span>ø</span>å</div><div class="q" data-i18n="p2.q">“Hvornår blev Danmark medlem af EF?”</div></div>
+          <div class="body"><div class="meta" data-i18n="p2.meta">Web · redesign på vej</div><h3>DANSK</h3>
+            <p data-i18n="p2.short">Træning til indfødsretsprøven, som holdes ajour, når spørgsmålene skifter. Næste skridt: et sprogspor med en/et, på/i og stød.</p></div></div>
+        <a class="pcard" href="https://github.com/Lena-LSG/portfolio"><div class="panel site" aria-hidden="true"><code>$ python3 verify.py .<br><b>All images are clean.</b><br><i>0</i> trackers · <i>0</i> cookies</code></div>
+          <div class="body"><div class="meta" data-i18n="p3.meta">Web · open source</div><h3>lenagibson.eu</h3>
+            <p data-i18n="p3.short">Den her side. Statisk og uden trackere, med en pipeline, der fjerner metadata fra hvert foto, og en CI-test, der fejler, hvis noget slipper igennem.</p>
+            <span class="go" data-i18n="p3.go">Kildekode →</span></div></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-wrap">
+    <div class="wrap">
+      <div class="contact">
+        <h2 data-i18n="c.h2">Sig hej</h2>
+        <p data-i18n="c.p">Der er ingen kontaktformular, så der er intet at spamme eller hacke. Skriv bare en mail.</p>
+        <div class="addr"><code id="mail">lena@lenagibson.eu</code><button type="button" id="copyBtn" data-i18n="c.copy">Kopiér</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="f.a">Ingen cookies, ingen trackere, så heller intet cookiebanner.</span>
+    <span><span data-i18n="f.thanks">Tak, fordi du kiggede forbi</span> · <a href="https://github.com/Lena-LSG/portfolio" data-i18n="f.src">Kildekode</a></span>
+  </div>
+</footer>
+
+<dialog class="lb" id="lb" aria-label="Photo"><div class="inner"><img id="lbImg" alt=""><div class="bar"><p id="lbCap"></p><div class="ctl"><button type="button" id="lbPrev" aria-label="Previous">←</button><button type="button" id="lbNext" aria-label="Next">→</button><button type="button" id="lbClose" data-i18n="lb.close">Luk</button></div></div></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>window.PAGE_EN = {"pr.h1": "Things I <em>build</em>", "pr.lede": "Side projects held to the same standard as work: threat model first, no trackers and open source.", "p1.short": "An app that teaches you to read Japanese: kanji in real words, with spaced repetition. Offline, no accounts, no trackers.", "p1.go": "Read the case study →", "p2.q": "“When did Denmark join the EC?”", "p2.meta": "Web · redesign underway", "p2.short": "Practice for the Danish citizenship test, kept current as the questions change. Next: a language track with en/et, på/i and stød.", "p3.meta": "Web · open source", "p3.short": "This site. Static and tracker-free, with a pipeline that strips metadata from every photo and a CI check that fails if anything slips through.", "p3.go": "Source →"};</script>
+<script src="assets/site.js"></script>
+</body>
+</html>

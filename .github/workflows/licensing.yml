@@ -1,0 +1,20 @@
+name: Licensing
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  reuse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Every file has a licence (REUSE)
+        run: |
+          python3 -m pip install --disable-pip-version-check reuse==6.3.0
+          reuse lint

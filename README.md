@@ -1,39 +1,50 @@
-# Lena Gibson - Cybersecurity Engineer Portfolio
+# lenagibson.eu
 
-## Overview
+Source for [lenagibson.eu](https://lenagibson.eu), the personal site of Lena Gibson: security engineer in
+København, builder of small apps, taker of photos in bad weather.
 
-Welcome to my professional portfolio! I am Lena Gibson, a passionate Cybersecurity Engineer specializing in penetration testing, security architecture, and vulnerability management.
+The site is static: no trackers, no cookies, no contact form, no third-party scripts.
 
-## Features
+## Status
 
-- **About Me**: Learn more about my background and certifications.
-- **Skills**: Overview of my technical competencies.
-- **Projects**: Detailed descriptions of my professional achievements.
-- **Contact**: Get in touch with me through the contact form.
+`mockup/` holds the signed-off design: home, about, projects (with a Kanjiskole case study) and photos,
+in Danish and English, with a day and an evening mode. The next step is the real site in
+[Eleventy](https://www.11ty.dev/), with self-hosted fonts, separate `/en/` pages, strict security headers
+and `security.txt`. Hosting is still being decided.
 
-## Technologies Used
+## Layout
 
-- **Frontend**: HTML, CSS, JavaScript, Bootstrap
-- **Backend**: PHP, PHPMailer
-- **Tools**: Composer, Git
+| Path | What |
+|---|---|
+| `mockup/build.py` | Generates the mock-up pages from shared templates |
+| `mockup/assets/` | Shared CSS and JavaScript |
+| `mockup/photos/` | Scrubbed photos, 800 px and 1600 px |
+| `tools/photos/` | `scrub.py` cleans photos, `verify.py` fails on any image metadata |
+| `docs/PHOTOS.md` | How photos are added, and why "GPS off" is not enough |
 
-## Setup Instructions
-1. **Clone the Repository**
-    ```sh
-    git clone https://github.com/yourusername/portfolio.git
-    ```
-2. **Navigate to the Project Directory**
-    ```sh
-    cd portfolio
-    ```
-3. **Install Dependencies**
-    ```sh
-    composer install
-    ```
-4. **Configure Environment Variables**
-    - Rename `.env.example` to `.env` and update the necessary values.
-5. **Run the Application**
-    - Use a local server like XAMPP or PHP's built-in server for testing:
-      ```sh
-      php -S localhost:8000
-      ```
+## Build the mock-up locally
+
+```sh
+pip install -r tools/photos/requirements.txt
+python3 mockup/build.py
+python3 -m http.server -d mockup 8000   # then open http://localhost:8000
+```
+
+## Checks
+
+Every push runs two GitHub Actions workflows:
+
+- **Photo privacy:** `tools/photos/verify.py` fails if any image, file or embedded, carries metadata.
+- **Licensing:** `reuse lint` fails if any file lacks copyright and licence information.
+
+## Licence
+
+- **Code** is MIT. See `LICENSE`.
+- **Photos and written content** (biography, project texts, captions) are © Lena Gibson, all rights reserved.
+- **Kanjiskole screenshots** use the same terms as the Kanjiskole repository.
+
+Exact terms per file are in `REUSE.toml` and `LICENSES/`. Credits are in `CREDITS.md`.
+
+## Security
+
+Found something? Email lena@lenagibson.eu. A `security.txt` arrives with the real site.
