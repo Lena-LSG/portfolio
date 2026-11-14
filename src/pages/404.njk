@@ -1,0 +1,16 @@
+---
+pagination:
+  data: site.langs
+  size: 1
+  alias: lang
+pageId: notFound
+noIndex: true
+permalink: "{{ '/404.html' if lang == 'da' else '/en/404.html' }}"
+layout: base.njk
+eleventyExcludeFromCollections: true
+---
+  <div class="wrap page-head">
+    <h1>{{ t.notFound.h1_html | tr(lang) | safe }}</h1>
+    <p>{{ t.notFound.p | tr(lang) }}</p>
+    <div class="cta"><a class="btn" href="{{ '/' | inLang(lang) }}">{{ t.notFound.home | tr(lang) }}</a></div>
+  </div>

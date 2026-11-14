@@ -1,0 +1,26 @@
+name: Site
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1"   # weekly, so a stale security.txt expiry is caught even without pushes
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Install (exact versions, no install scripts)
+        run: npm ci --ignore-scripts
+      - name: Build
+        run: npm run build
+      - name: Site rules (CSP-safe markup, meta, links, security.txt, headers)
+        run: python3 tools/check_site.py _site
+      - name: No metadata in built images
+        run: python3 tools/photos/verify.py _site

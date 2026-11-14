@@ -1,0 +1,26 @@
+---
+pagination:
+  data: site.langs
+  size: 1
+  alias: lang
+pageId: photos
+permalink: "{{ site.pages.photos | inLang(lang) }}index.html"
+layout: base.njk
+---
+{%- import "macros.njk" as m with context -%}
+  <div class="wrap page-head">
+    <h1>{{ t.nav.photos | tr(lang) }}</h1>
+    <p>{{ t.photosPage.lede | tr(lang) }}</p>
+    <div class="series-nav">{% for s in photos.series %}<a href="#s-{{ s.id }}">{{ s | tr(lang) }}</a>{% endfor %}</div>
+  </div>
+  <section class="flush">
+    <div class="gallery">
+      {%- for s in photos.series %}
+      <div class="series" id="s-{{ s.id }}">
+        {%- set names = [] %}{% for n, p in photos.list %}{% if p.series == s.id %}{% set names = (names.push(n), names) %}{% endif %}{% endfor %}
+        <div class="head"><h2>{{ s | tr(lang) }}</h2><span class="count">{{ names.length }} {{ t.photosPage.count | tr(lang) }}</span></div>
+        <div class="masonry">{% for n in names %}{{ m.shot(n) | safe }}{% endfor %}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </section>

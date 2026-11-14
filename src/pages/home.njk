@@ -1,0 +1,50 @@
+---
+pagination:
+  data: site.langs
+  size: 1
+  alias: lang
+pageId: home
+permalink: "{{ site.pages.home | inLang(lang) }}index.html"
+layout: base.njk
+---
+{%- import "macros.njk" as m with context -%}
+  <div class="wrap hero">
+    <div>
+      <div class="kicker">{{ t.home.kicker | tr(lang) }}</div>
+      <h1>{{ t.home.h1_html | tr(lang) | safe }}</h1>
+      <p class="intro">{{ t.home.intro_html | tr(lang) | safe }}</p>
+      <div class="cta">
+        <a class="btn" href="{{ site.pages.projects | inLang(lang) }}">{{ t.home.cta | tr(lang) }}</a>
+        <a href="{{ site.pages.about | inLang(lang) }}">{{ t.home.story | tr(lang) }}</a>
+      </div>
+    </div>
+    <div class="portrait">
+      {{ m.img("lena-hero", "Lena Gibson", "", true) | safe }}
+      <button class="friend" id="friend" type="button" aria-label="{{ t.friendLabel | tr(lang) }}" hidden><svg viewBox="0 0 200 200" id="friendSvg" aria-hidden="true"></svg></button>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap teaser">
+      {{ m.img("lena-glyptotek", t.home.teaserAlt | tr(lang)) | safe }}
+      <div>
+        <p class="say">{{ t.home.say_html | tr(lang) | safe }}</p>
+        <p>{{ t.home.teaser | tr(lang) }}</p>
+        <a class="more" href="{{ site.pages.about | inLang(lang) }}">{{ t.home.more | tr(lang) }}</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="head row"><h2>{{ t.home.projH2 | tr(lang) }}</h2><a class="more" href="{{ site.pages.projects | inLang(lang) }}">{{ t.home.projAll | tr(lang) }}</a></div>
+      {{ m.cards() | safe }}
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap"><div class="head row"><h2>{{ t.home.phH2 | tr(lang) }}</h2><a class="more" href="{{ site.pages.photos | inLang(lang) }}">{{ t.home.phAll | tr(lang) }}</a></div></div>
+    <div class="strip-photos">
+      {%- for n in photos.strip %}{{ m.shot(n, "(max-width: 640px) 70vw, 340px") | safe }}{% endfor %}
+    </div>
+  </section>

@@ -1,0 +1,20 @@
+{%- macro shot(name, sizes="(max-width: 640px) 50vw, 33vw") -%}
+{%- set p = photos.list[name] -%}{%- set s = photoSizes[name + "-800"] -%}
+<figure class="shot"><a class="open" href="/photos/{{ name }}.webp" data-full="/photos/{{ name }}.webp"><img src="/photos/{{ name }}-800.webp" srcset="/photos/{{ name }}-800.webp 800w, /photos/{{ name }}.webp 1600w" sizes="{{ sizes }}" width="{{ s[0] }}" height="{{ s[1] }}" loading="lazy" decoding="async" alt="{{ p | tr(lang) }}"></a><figcaption>{{ p | tr(lang) }}</figcaption></figure>
+{%- endmacro -%}
+
+{%- macro img(name, alt, cls="", eager=false) -%}
+{%- set s = photoSizes[name] -%}
+<img src="/photos/{{ name }}.webp" width="{{ s[0] }}" height="{{ s[1] }}" alt="{{ alt }}"{% if cls %} class="{{ cls }}"{% endif %} {% if eager %}fetchpriority="high"{% else %}loading="lazy"{% endif %} decoding="async">
+{%- endmacro -%}
+
+{%- macro cards() -%}
+<div class="cards">
+  <a class="pcard" href="{{ site.pages.kanjiskole | inLang(lang) }}"><div class="panel ks"><img src="/photos/ks-home.webp" alt="" width="416" height="900" loading="lazy"><img src="/photos/ks-word.webp" alt="" width="416" height="900" loading="lazy"></div>
+    <div class="body"><div class="meta">Android · Web · GPL-3.0</div><h3>Kanjiskole</h3><p>{{ t.cards.ksShort | tr(lang) }}</p><span class="go">{{ t.cards.ksGo | tr(lang) }}</span></div></a>
+  <div class="pcard"><div class="panel dk"><div class="letters">æ<span>ø</span>å</div><div class="q">{{ t.cards.dkQ | tr(lang) }}</div></div>
+    <div class="body"><div class="meta">{{ t.cards.dkMeta | tr(lang) }}</div><h3>DANSK</h3><p>{{ t.cards.dkShort | tr(lang) }}</p></div></div>
+  <a class="pcard" href="https://github.com/Lena-LSG/portfolio"><div class="panel site" aria-hidden="true"><code>$ python3 verify.py .<br><b>All images are clean.</b><br><i>0</i> trackers · <i>0</i> cookies</code></div>
+    <div class="body"><div class="meta">{{ t.cards.siteMeta | tr(lang) }}</div><h3>lenagibson.eu</h3><p>{{ t.cards.siteShort | tr(lang) }}</p><span class="go">{{ t.cards.siteGo | tr(lang) }}</span></div></a>
+</div>
+{%- endmacro -%}

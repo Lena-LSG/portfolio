@@ -10,9 +10,13 @@ The repository is public, so every photo in it is public, including its history.
 
 ```sh
 pip install -r tools/photos/requirements.txt
-python3 tools/photos/scrub.py --out mockup/photos tools/photos/inbox/IMG_1234.jpg=nyhavn
+python3 tools/photos/scrub.py --out src/photos tools/photos/inbox/IMG_1234.jpg=nyhavn
+python3 tools/photos/scrub.py --out src/photos --max 800 --quality 74 tools/photos/inbox/IMG_1234.jpg=nyhavn-800
+python3 tools/photos/manifest.py      # updates src/_data/photoSizes.json
 python3 tools/photos/verify.py .
 ```
+
+Then add the caption (Danish and English) and the series to `src/_data/photos.js`.
 
 `scrub.py` applies the orientation, resizes (longest edge 1600 px by default) and rebuilds the image from pixels
 only, so nothing from the original file survives. You name each output yourself, because camera filenames contain
