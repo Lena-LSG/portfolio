@@ -18,3 +18,5 @@ Thumbs.db
 
 # Log files
 *.log
+# Personal photos stay out of git history until Lena decides
+mockup/photos/
