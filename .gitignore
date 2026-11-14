@@ -20,3 +20,4 @@ Thumbs.db
 *.log
 # Original photos (with metadata) never get committed; only scrub.py output does
 tools/photos/inbox/
+__pycache__/
